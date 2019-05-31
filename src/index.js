@@ -27,7 +27,7 @@ class Rule extends React.Component {
   renderCell(i, cell, rule) {
     return(
       <Cell
-        index={cell}
+        index={cell + 1}
         value={i}
         onClick={() => this.props.onClick(cell, rule)}
       />
@@ -37,11 +37,11 @@ class Rule extends React.Component {
   render() {
     return (
       <div className="rule">          
-          {this.renderCell(this.state.rule.substring(0, 1), 1, Number(this.props.rule))}
-          {this.renderCell(this.state.rule.substring(1, 2), 2, Number(this.props.rule))}
-          {this.renderCell(this.state.rule.substring(2, 3), 3, Number(this.props.rule))}
-          {this.renderCell(this.state.rule.substring(3, 4), 4, Number(this.props.rule))}
-          {this.renderCell(this.state.rule.substring(4, 5), 5, Number(this.props.rule))}
+          {this.renderCell(this.state.rule[0], 0, this.props.index)}
+          {this.renderCell(this.state.rule[1], 1, this.props.index)}
+          {this.renderCell(this.state.rule[2], 2, this.props.index)}
+          {this.renderCell(this.state.rule[3], 3, this.props.index)}
+          {this.renderCell(this.state.rule[4], 4, this.props.index)}
       </div>
     );
   }
@@ -51,19 +51,20 @@ class RuleSet extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      rules: Array(5).fill("11211"),
+      rules: [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
     }
   }
 
   handleClick(i, rule) {
-    let start = String(rule).substr(0, i - 1);
-    let char = String(Number(String(rule).substr(i, i + 1)) + 1);
-    let end = String(rule).substr(i + 2, rule.length);
-    console.log("rule: " + start + " : " + char + " : " + end);
-    this.setState({
-      rule: start + char + end,
-    });
+    const rules = this.state.rules.slice();
+    rules[rule - 1][i]++ ; 
+    if(rules[rule - 1][i] > 5) {
+      rules[rule - 1][i] = 0
+    }
 
+    this.setState({
+      rules: rules
+    });
   }
 
   render() {
