@@ -1,0 +1,104 @@
+body {
+  font: 14px "Century Gothic", Futura, sans-serif;
+  margin: 20px;
+}
+
+ol, ul {
+  padding-left: 30px;
+}
+
+.board-row:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+.status {
+  margin-bottom: 10px;
+}
+
+.icon1 {
+  background: url("./img/fa1.png") -36px;
+}
+
+.icon2 {
+  background: url("./img/fa1.png") -72px;
+}
+
+.icon3 {
+  background: url("./img/fa1.png") -108px;
+}
+
+.icon4 {
+  background: url("./img/fa1.png") -146px;
+}
+
+.icon5 {
+  background: url("./img/fa1.png") -182px;
+}
+
+.rule {
+  position: relative;
+  margin: 20px;
+  float: left;
+  width: 90px;
+}
+
+.cell1 {
+  position: absolute;
+  left: 29px;
+  top: 0;
+}
+
+.cell2 {
+  position: absolute;
+  left: 0;
+  top: 29px;
+}
+
+.cell3 {
+  position: absolute;
+  left: 29px;
+  top: 29px;
+}
+
+.cell4 {
+  position: absolute;
+  left: 58px;
+  top: 29px;
+}
+
+.cell5 {
+  position: absolute;
+  left: 29px;
+  top: 58px;
+}
+
+.cell--inner {
+  position: absolute;
+  border: 1px solid #999;
+  float: left;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 34px;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0;
+  text-align: center;
+  width: 30px;
+  height: 30px;
+}
+
+.rule--cell:focus {
+  outline: none;
+}
+
+.kbd-navigation .square:focus {
+  background: #ddd;
+}
+
+.mft {
+  display: flex;
+  flex-direction: row;
+}
+

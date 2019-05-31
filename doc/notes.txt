@@ -1,0 +1,3 @@
+handle click needs to set value at ruleset level instead of rule level - needs ruleIndex to do so.
+Differentiate between ruleValue and ruleIndex
+?Move rules to be stored as an array of arrays instead of an array of strings
