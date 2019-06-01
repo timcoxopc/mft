@@ -1,4 +1,5 @@
 body {
+  background: #eee;
   font: 14px "Century Gothic", Futura, sans-serif;
   margin: 20px;
 }
@@ -38,46 +39,62 @@ ol, ul {
 }
 
 .rule {
+  background: #fff;
   position: relative;
-  margin: 20px;
+  margin: 0 14px 11px 0;
   float: left;
-  width: 90px;
-  height: 90px;
+  width: 185px;
+  height: 100px;
+  border-radius: 7px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
 
 .cell1 {
   position: absolute;
-  left: 29px;
-  top: 0;
+  left: 78px;
+  top: 7px;
 }
 
 .cell2 {
   position: absolute;
-  left: 0;
-  top: 29px;
+  left: 49px;
+  top: 36px;
 }
 
 .cell3 {
   position: absolute;
-  left: 29px;
-  top: 29px;
+  left: 78px;
+  top: 36px;
 }
 
 .cell4 {
   position: absolute;
-  left: 58px;
-  top: 29px;
+  left: 107px;
+  top: 36px;
 }
 
 .cell5 {
   position: absolute;
-  left: 29px;
-  top: 58px;
+  left: 78px;
+  top: 65px;
+}
+
+.cell6 {
+  position: absolute;
+  left: 147px;
+  top: 36px;
+}
+
+.cell7 { 
+  position: absolute;
+  left: 9px;
+  top: 36px;
 }
 
 .cell--inner {
   position: absolute;
-  border: 1px solid #999;
+  border: 1px solid #ccc;
   float: left;
   font-size: 24px;
   font-weight: bold;

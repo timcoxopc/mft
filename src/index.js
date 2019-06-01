@@ -42,6 +42,8 @@ class Rule extends React.Component {
           {this.renderCell(this.state.rule[2], 2, this.props.index)}
           {this.renderCell(this.state.rule[3], 3, this.props.index)}
           {this.renderCell(this.state.rule[4], 4, this.props.index)}
+          {this.renderCell(this.state.rule[5], 5, this.props.index)}
+          {this.renderCell(this.state.rule[6], 6, this.props.index)}
       </div>
     );
   }
@@ -50,8 +52,12 @@ class Rule extends React.Component {
 class RuleSet extends React.Component {
   constructor(props) {
     super(props);
+    let emptyRules = []
+    for (let i = 0; i < 40; i++) {
+      emptyRules.push([0, 0, 0, 0, 0])
+    }
     this.state = {
-      rules: [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
+      rules: emptyRules
     }
   }
 
@@ -68,13 +74,15 @@ class RuleSet extends React.Component {
   }
 
   render() {
+    const totalRules = 40;
+    let rows = [];
+    for (let i = 0; i < totalRules; i++) {
+      rows.push(<Rule index={i + 1} rule={this.state.rules[i]} onClick={(cell, rule) => this.handleClick(cell, rule)} />);
+    }
+
     return (
         <div>
-            <Rule index="1" rule={this.state.rules[0]} onClick={(cell, rule) => this.handleClick(cell, rule)} />
-            <Rule index="2" rule={this.state.rules[1]} onClick={(cell, rule) => this.handleClick(cell, rule)} />
-            <Rule index="3" rule={this.state.rules[2]} onClick={(cell, rule) => this.handleClick(cell, rule)} />
-            <Rule index="4" rule={this.state.rules[3]} onClick={(cell, rule) => this.handleClick(cell, rule)} />
-            <Rule index="5" rule={this.state.rules[4]} onClick={(cell, rule) => this.handleClick(cell, rule)} />
+          {rows}
         </div>
     );
   }
