@@ -79,6 +79,50 @@ ol, ul {
   background: url("./img/chicken.png") -160px  -32px;
 }
 
+.icon6 {
+  background: url("./img/chicken.png") -192px  -32px;
+}
+
+.icon7 {
+  background: url("./img/chicken.png") -224px  -32px;
+}
+
+.icon8 {
+  background: url("./img/chicken.png") -256px  -32px;
+}
+
+.icon9 {
+  background: url("./img/chicken.png") -32px 0;
+}
+
+.icon10 {
+  background: url("./img/chicken.png") -64px  0;
+}
+
+.icon11 {
+  background: url("./img/chicken.png") -96px  0;
+}
+
+.icon12 {
+  background: url("./img/chicken.png") -128px  0;
+}
+
+.icon13 {
+  background: url("./img/chicken.png") -160px  0;
+}
+
+.icon14 {
+  background: url("./img/chicken.png") -192px  0;
+}
+
+.icon15 {
+  background: url("./img/chicken.png") -224px  0;
+}
+
+.icon16 {
+  background: url("./img/chicken.png") -256px  0;
+}
+
 .rule {
   background: #fff;
   position: relative;
@@ -170,4 +214,28 @@ ol, ul {
 
 .popover {
   max-width: 216px
+}
+
+.sprite-palette {
+  padding: 11px 0 0 10px;
+  position: fixed;
+  z-index: 99;
+  margin: -11px 0 0 -20px;
+  width: 85px;
+  height: 100%;
+}
+
+.sprite-palette--cell {
+  margin: 4px 3px 0 0;
+  height: 32px;
+  width: 32px;
+  float: left
+}
+
+.sprite-palette--cell .cell--inner {
+  border: none;
+}
+
+.rules-wrapper {
+  padding: 3px 0 0 73px
 }

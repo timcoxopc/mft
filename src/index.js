@@ -10,6 +10,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import ExportModal from './ExportModal';
 import ImportModal from './ImportModal';
+import SpritePalette from './SpritePalette';
 import Rule from './Rule';
 import { BrowserRouter as Router } from "react-router-dom";
 import { Route, Switch } from "react-router-dom";
@@ -24,7 +25,8 @@ class RuleSet extends React.Component {
     }
     this.state = {
       rules: emptyRules,
-      modalShow: false
+      modalShow: false,
+      spriteIndex: 0   
     }
   }
 
@@ -32,11 +34,10 @@ class RuleSet extends React.Component {
     //console.log("*", i, rule, value);
     const rules = this.state.rules.slice();
     if(value == undefined && i != 6){
-      rules[rule - 1][i]++ ; 
-      if(rules[rule - 1][i] > 5) {
-        rules[rule - 1][i] = 0
-      }
+      console.log("B", this.state.spriteIndex);
+      rules[rule - 1][i] = this.state.spriteIndex;
     } else {
+      document.body.click();
       rules[rule - 1][i] = value;
     }
     this.setState({
@@ -47,6 +48,12 @@ class RuleSet extends React.Component {
   openFile(file) {
     console.log("Open file", file);
     this.setState({ modalShow: false });
+  }
+  
+  setSprite(spriteIndex) {
+    this.setState({
+      spriteIndex: spriteIndex
+    });
   }
 
   render() {
@@ -90,9 +97,11 @@ class RuleSet extends React.Component {
             <Route path="/export" exact component={ExportModal} />
             <Route path="/open" exact component={ExportModal} />
           </Switch>
-
-          {rules}
           
+          <SpritePalette onClick={(file) => this.setSprite(file)} />
+          <div class="rules-wrapper">
+            {rules}
+          </div>
           <ImportModal show={this.state.modalShow} onHide={modalClose} openfile={(file) => this.openFile(file)} />
         </div>
     );

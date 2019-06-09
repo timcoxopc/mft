@@ -60,8 +60,7 @@ class Rule extends React.Component {
     //this.attachRef = target => this.setState({ target });
     console.log("###", this.attachRef);
     this.state = { 
-        rule: props.rule, 
-        show: false
+        rule: props.rule 
     };
   }
   
@@ -137,7 +136,7 @@ class Rule extends React.Component {
     return (
       <div className="rule">          
             
-          <OverlayTrigger show={this.state.show} trigger="click" overlay={popover} placement="right" rootClose>
+          <OverlayTrigger trigger="click" overlay={popover} placement="right" rootClose>
           <Trigger
               cellIndex={6}
               value={this.state.rule[6]}
