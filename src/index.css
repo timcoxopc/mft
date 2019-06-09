@@ -1,7 +1,7 @@
 body {
   background: #eee;
   font: 14px "Century Gothic", Futura, sans-serif;
-  margin: 20px;
+  margin: 60px 20px 20px 20px;
 }
 
 ol, ul {
@@ -18,24 +18,65 @@ ol, ul {
   margin-bottom: 10px;
 }
 
+.trigger1 {
+  background: url("./img/triggers/arrow_left.png");
+}
+
+.trigger2 {
+  background: url("./img/triggers/arrow_up.png");
+}
+
+.trigger3 {
+  background: url("./img/triggers/arrow_right.png");
+}
+
+.trigger4 {
+  background: url("./img/triggers/arrow_down.png");
+}
+
+.trigger5 {
+  background: url("./img/triggers/tap.png");
+}
+
+.trigger6 {background: url("./img/triggers/button1.png")}
+.trigger7 {background: url("./img/triggers/button2.png")}
+.trigger8 {background: url("./img/triggers/1-2-random.png")}
+.trigger9 {background: url("./img/triggers/2-2-random.png")}
+.trigger10 {background: url("./img/triggers/step1.png")}
+.trigger11 {background: url("./img/triggers/timer1.png")}
+.trigger12{background: url("./img/triggers/timer2.png")}
+.trigger13 {background: url("./img/triggers/timer1.png")}
+.trigger14 {background: url("./img/triggers/loop.png")}
+.trigger15 {background: url("./img/triggers/loop1.png")}
+.trigger16 {background: url("./img/triggers/1-4-random.png")}
+.trigger17 {background: url("./img/triggers/2-4-random.png")}
+.trigger18 {background: url("./img/triggers/3-4-random.png")}
+.trigger19 {background: url("./img/triggers/4-4-random.png")}
+.trigger20 {background: url("./img/triggers/step2.png")}
+.trigger21 {background: url("./img/triggers/trigger1.png")}
+.trigger22 {background: url("./img/triggers/trigger2.png")}
+.trigger23 {background: url("./img/triggers/trigger3.png")}
+.trigger24 {background: url("./img/triggers/trigger4.png")}
+.trigger25 {background: url("./img/triggers/loop2.png")}
+
 .icon1 {
-  background: url("./img/fa1.png") -36px;
+  background: url("./img/chicken.png") -32px -32px;
 }
 
 .icon2 {
-  background: url("./img/fa1.png") -72px;
+  background: url("./img/chicken.png") -64px  -32px;
 }
 
 .icon3 {
-  background: url("./img/fa1.png") -108px;
+  background: url("./img/chicken.png") -96px  -32px;
 }
 
 .icon4 {
-  background: url("./img/fa1.png") -146px;
+  background: url("./img/chicken.png") -128px  -32px;
 }
 
 .icon5 {
-  background: url("./img/fa1.png") -182px;
+  background: url("./img/chicken.png") -160px  -32px;
 }
 
 .rule {
@@ -80,20 +121,19 @@ ol, ul {
   top: 65px;
 }
 
-.cell6 {
+.cell-output {
   position: absolute;
   left: 147px;
   top: 36px;
 }
 
-.cell7 { 
+.cell-trigger { 
   position: absolute;
   left: 9px;
   top: 36px;
 }
 
 .cell--inner {
-  position: absolute;
   border: 1px solid #ccc;
   float: left;
   font-size: 24px;
@@ -105,6 +145,14 @@ ol, ul {
   text-align: center;
   width: 30px;
   height: 30px;
+}
+
+.cell--trigger {
+  background-size: contain;
+}
+
+.cell-trigger .cell--inner {
+  border-radius: 15px;
 }
 
 .rule--cell:focus {
@@ -120,3 +168,6 @@ ol, ul {
   flex-direction: row;
 }
 
+.popover {
+  max-width: 216px
+}
