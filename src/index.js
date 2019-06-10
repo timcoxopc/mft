@@ -23,18 +23,19 @@ class RuleSet extends React.Component {
     for (let i = 0; i < 40; i++) {
       emptyRules.push([0, 0, 0, 0, 0, 0, 0]);
     }
+
     this.state = {
       rules: emptyRules,
       modalShow: false,
+      spriteSheet: "chicken",
       spriteIndex: 0   
     }
   }
-
+  
   handleClick(i, rule, value) {
     //console.log("*", i, rule, value);
     const rules = this.state.rules.slice();
-    if(value == undefined && i != 6){
-      console.log("B", this.state.spriteIndex);
+    if(value === undefined && i !== 6){
       rules[rule - 1][i] = this.state.spriteIndex;
     } else {
       document.body.click();
@@ -51,16 +52,25 @@ class RuleSet extends React.Component {
   }
   
   setSprite(spriteIndex) {
-    this.setState({
-      spriteIndex: spriteIndex
-    });
+    this.setState({ spriteIndex: spriteIndex });
+  }
+
+  selectSpriteSheet(value) {
+    this.setState({ spriteSheet: value });
   }
 
   render() {
     const totalRules = 40;
     let rules = [];
     for (let i = 0; i < totalRules; i++) {
-      rules.push(<Rule index={i + 1} rule={this.state.rules[i]} onClick={(cell, rule, value) => this.handleClick(cell, rule, value)} />);
+      rules.push(
+        <Rule 
+          index={i + 1} 
+          rule={this.state.rules[i]} 
+          spriteSheet={this.state.spriteSheet}
+          onClick={(cell, rule, value) => this.handleClick(cell, rule, value)} 
+        />
+      );
     }
 
     let modalClose = () => this.setState({ modalShow: false });
@@ -78,16 +88,16 @@ class RuleSet extends React.Component {
                 <NavDropdown.Item href="/open">Open...</NavDropdown.Item>
                 <NavDropdown.Item href="/export">Export...</NavDropdown.Item>
               </NavDropdown>
-              <NavDropdown title="Sprites" id="basic-nav-dropdown">
+              <NavDropdown title="Sprites" id="basic-nav-dropdown" onSelect={(e) => this.selectSpriteSheet(e)}>
                 <NavDropdown.Item href="/import">Import...</NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item href="/import">Ninja</NavDropdown.Item>
-                <NavDropdown.Item href="/import">Owls and Butterflies</NavDropdown.Item>
-                <NavDropdown.Item href="/import">Mushrooms</NavDropdown.Item>
-                <NavDropdown.Item href="/import">Desert</NavDropdown.Item>
-                <NavDropdown.Item href="/import">Caterpillar</NavDropdown.Item>
-                <NavDropdown.Item href="/import">Bomber</NavDropdown.Item>
-                <NavDropdown.Item href="/import">Snake</NavDropdown.Item>
+                <NavDropdown.Item eventKey="chicken">Ninja</NavDropdown.Item>
+                <NavDropdown.Item eventKey="owls">Owls and Butterflies</NavDropdown.Item>
+                <NavDropdown.Item eventKey="mushrooms">Mushrooms</NavDropdown.Item>
+                <NavDropdown.Item eventKey="desert">Desert</NavDropdown.Item>
+                <NavDropdown.Item eventKey="caterpillar">Caterpillar</NavDropdown.Item>
+                <NavDropdown.Item eventKey="bomber">Bomber</NavDropdown.Item>
+                <NavDropdown.Item eventKey="snake">Snake</NavDropdown.Item>
               </NavDropdown>
               </Nav>
             </Navbar.Collapse>
@@ -98,8 +108,8 @@ class RuleSet extends React.Component {
             <Route path="/open" exact component={ExportModal} />
           </Switch>
           
-          <SpritePalette onClick={(file) => this.setSprite(file)} />
-          <div class="rules-wrapper">
+          <SpritePalette spriteSheet={this.state.spriteSheet} onClick={(file) => this.setSprite(file)} />
+          <div className="rules-wrapper">
             {rules}
           </div>
           <ImportModal show={this.state.modalShow} onHide={modalClose} openfile={(file) => this.openFile(file)} />

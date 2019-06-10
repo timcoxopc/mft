@@ -60,67 +60,67 @@ ol, ul {
 .trigger25 {background: url("./img/triggers/loop2.png")}
 
 .icon1 {
-  background: url("./img/chicken.png") -32px -32px;
+  background-position: -32px  -32px;
 }
 
 .icon2 {
-  background: url("./img/chicken.png") -64px  -32px;
+  background-position: -64px  -32px;
 }
 
 .icon3 {
-  background: url("./img/chicken.png") -96px  -32px;
+  background-position: -96px  -32px;
 }
 
 .icon4 {
-  background: url("./img/chicken.png") -128px  -32px;
+  background-position: -128px  -32px;
 }
 
 .icon5 {
-  background: url("./img/chicken.png") -160px  -32px;
+  background-position: -160px  -32px;
 }
 
 .icon6 {
-  background: url("./img/chicken.png") -192px  -32px;
+  background-position: -192px  -32px;
 }
 
 .icon7 {
-  background: url("./img/chicken.png") -224px  -32px;
+  background-position: -224px  -32px;
 }
 
 .icon8 {
-  background: url("./img/chicken.png") -256px  -32px;
+  background-position: -256px  -32px;
 }
 
 .icon9 {
-  background: url("./img/chicken.png") -32px 0;
+  background-position: -32px 0;
 }
 
 .icon10 {
-  background: url("./img/chicken.png") -64px  0;
+  background-position: -64px  0;
 }
 
 .icon11 {
-  background: url("./img/chicken.png") -96px  0;
+  background-position: -96px  0;
 }
 
 .icon12 {
-  background: url("./img/chicken.png") -128px  0;
+  background-position: -128px  0;
 }
 
 .icon13 {
-  background: url("./img/chicken.png") -160px  0;
+  background-position: -160px  0;
 }
 
 .icon14 {
-  background: url("./img/chicken.png") -192px  0;
+  background-position: -192px  0;
 }
 
 .icon15 {
-  background: url("./img/chicken.png") -224px  0;
+  background-position: -224px  0;
 }
 
 .icon16 {
-  background: url("./img/chicken.png") -256px  0;
+  background-position: -256px  0;
 }
 
 .rule {
@@ -133,6 +133,12 @@ ol, ul {
   border-radius: 7px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.cell-wrapper {
+  transform: scale(.9);
+  margin-left: -2px;
+  margin-top: -2px;
 }
 
 .cell1 {
@@ -187,8 +193,22 @@ ol, ul {
   margin-top: -1px;
   padding: 0;
   text-align: center;
-  width: 30px;
-  height: 30px;
+  width: 34px;
+  height: 34px;
+}
+
+.sprite--inner {
+  float: left;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 34px;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0;
+  text-align: center;
+  width: 32px;
+  height: 32px;
+  border: none;
 }
 
 .cell--trigger {
@@ -229,7 +249,8 @@ ol, ul {
   margin: 4px 3px 0 0;
   height: 32px;
   width: 32px;
-  float: left
+  float: left;
+  transform: scale(0.9);
 }
 
 .sprite-palette--cell .cell--inner {
