@@ -28,6 +28,9 @@ class RuleSet extends React.Component {
       rules: emptyRules,
       modalShow: false,
       spriteSheet: "chicken",
+      spriteWidth: 32,
+      spriteHeight: 32,
+      spritesPerRow: 8,
       spriteIndex: 0   
     }
   }
@@ -56,6 +59,17 @@ class RuleSet extends React.Component {
   }
 
   selectSpriteSheet(value) {
+    if(value !== "chicken") {
+      this.setState({
+        spriteWidth: 16,
+        spriteHeight: 16
+      });
+    } else {
+      this.setState({
+        spriteWidth: 32,
+        spriteHeight: 32
+      });
+    }
     this.setState({ spriteSheet: value });
   }
 
@@ -65,6 +79,7 @@ class RuleSet extends React.Component {
     for (let i = 0; i < totalRules; i++) {
       rules.push(
         <Rule 
+          key={i}
           index={i + 1} 
           rule={this.state.rules[i]} 
           spriteSheet={this.state.spriteSheet}
@@ -108,7 +123,7 @@ class RuleSet extends React.Component {
             <Route path="/open" exact component={ExportModal} />
           </Switch>
           
-          <SpritePalette spriteSheet={this.state.spriteSheet} onClick={(file) => this.setSprite(file)} />
+          <SpritePalette spriteSheet={this.state.spriteSheet} spriteWidth={this.state.spriteWidth} spriteHeight={this.state.spriteHeight} spritesPerRow={this.state.spritesPerRow} onClick={(file) => this.setSprite(file)} />
           <div className="rules-wrapper">
             {rules}
           </div>

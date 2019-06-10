@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import ExportWindow from './ExportWindow';
@@ -6,8 +6,6 @@ import ExportWindow from './ExportWindow';
 class ExportModal extends React.Component {
     constructor(props, context) {
       super(props, context);
-  
-      this.handleClose = this.handleClose.bind(this);
   
       this.state = {
         show: true,
@@ -21,13 +19,13 @@ class ExportModal extends React.Component {
     render() {
       return (
         <>
-          <Modal show={this.state.show} onHide={this.handleClose}>
+          <Modal show={this.state.show} onHide={() => this.handleClose()}>
             <Modal.Header closeButton>
               <Modal.Title>Export</Modal.Title>
             </Modal.Header>
             <Modal.Body><ExportWindow /></Modal.Body>
             <Modal.Footer>
-              <Button variant="secondary" onClick={this.handleClose}>
+              <Button variant="secondary" onClick={() => this.handleClose()}>
                 Close
               </Button>
             </Modal.Footer>

@@ -5,13 +5,33 @@ const images = require.context('../public/img', true);
 function Cell(props) {
     let code = props.spriteSheet;
     let imgsrc = images(`./${code}.png`);
-    let styler = {
-        backgroundImage: `url(${imgsrc})`
+
+    let offsetY = "0";
+    if(props.value < props.spritesPerRow){
+        console.log("&&")
+        offsetY = props.spriteHeight * -1 + "px"
+    } 
+    console.log("B", offsetY, props.value, props.spritesPerRow);
+    let position = props.spriteWidth * props.value * -1 + "px " + offsetY;
+    let spriteInnerStyle = {
+        float: "left",
+        fontSize: "24px",
+        fontWeight: "bold",
+        lineHeight: "34px",
+        marginRight: "-1px",
+        marginTop: "-1px",
+        padding: "0",
+        textAlign: "center",
+        width: props.spriteWidth,
+        height: props.spriteHeight,
+        border: "none",
+        backgroundImage: `url(${imgsrc})`,
+        backgroundPosition: position
     }
 
     return (
-      <div className={props.className}>
-        <button style={styler} className={"sprite--inner icon" + props.value} onClick={props.onClick} />
+      <div style={props.style}>
+        <button style={spriteInnerStyle} onClick={props.onClick} />
       </div>
     );
   }
@@ -26,45 +46,49 @@ class SpritePalette extends React.Component {
   }
   
   renderSprite(i, className) {
+    
+    let spriteCellStyle = {
+        margin: "4px 3px 0 0",
+        width: "29.7px",
+        height: "29.7px",
+        float: "left",
+        transform: "scale(" + 29.7 / this.props.spriteWidth + ")",
+        transformOrigin: "top left"
+    }
+
     return(
       <Cell
         spriteSheet={this.props.spriteSheet}
+        spriteWidth={this.props.spriteWidth}
+        spriteHeight={this.props.spriteHeight}
+        spritesPerRow={this.props.spritesPerRow}
         value={i}
-        className={className}
+        style={spriteCellStyle}        
         onClick={() => this.props.onClick(i)}
       />
     );
+    // className={"sprite-palette--cell"}
   }
-  
-  /*
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps, this.props.spriteSheet, this.state.spriteSheet);
-    
-    this.setState = {
-        spriteSheet: "mushrooms"
-    };
-  }
-  */
 
   render() {  
     return (
         <div className="sprite-palette bg-dark">  
-            {this.renderSprite(1, "sprite-palette--cell")}
-            {this.renderSprite(2, "sprite-palette--cell")}
-            {this.renderSprite(3, "sprite-palette--cell")}
-            {this.renderSprite(4, "sprite-palette--cell")}
-            {this.renderSprite(5, "sprite-palette--cell")}
-            {this.renderSprite(6, "sprite-palette--cell")}
-            {this.renderSprite(7, "sprite-palette--cell")}
-            {this.renderSprite(8, "sprite-palette--cell")}
-            {this.renderSprite(9, "sprite-palette--cell")}
-            {this.renderSprite(10, "sprite-palette--cell")}
-            {this.renderSprite(11, "sprite-palette--cell")}
-            {this.renderSprite(12, "sprite-palette--cell")}
-            {this.renderSprite(13, "sprite-palette--cell")}
-            {this.renderSprite(14, "sprite-palette--cell")}
-            {this.renderSprite(15, "sprite-palette--cell")}
-            {this.renderSprite(16, "sprite-palette--cell")}
+            {this.renderSprite(1)}
+            {this.renderSprite(2)}
+            {this.renderSprite(3)}
+            {this.renderSprite(4)}
+            {this.renderSprite(5)}
+            {this.renderSprite(6)}
+            {this.renderSprite(7)}
+            {this.renderSprite(8)}
+            {this.renderSprite(9)}
+            {this.renderSprite(10)}
+            {this.renderSprite(11)}
+            {this.renderSprite(12)}
+            {this.renderSprite(13)}
+            {this.renderSprite(14)}
+            {this.renderSprite(15)}
+            {this.renderSprite(16)}
         </div>
     );
   }
