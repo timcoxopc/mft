@@ -1,6 +1,8 @@
 import React from 'react';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Popover from 'react-bootstrap/Popover'
+import Cell from "./Cell.js";
+
 import trigger1 from './img/triggers/arrow_left.png';
 import trigger2 from './img/triggers/arrow_up.png';
 import trigger3 from './img/triggers/arrow_right.png';
@@ -26,22 +28,6 @@ import trigger22 from './img/triggers/trigger2.png';
 import trigger23 from './img/triggers/trigger3.png';
 import trigger24 from './img/triggers/trigger4.png';
 import trigger25 from './img/triggers/loop2.png';
-
-const images = require.context('../public/img', true);
-
-function Cell(props) {
-  let code = props.spriteSheet;
-  let imgsrc = images(`./${code}.png`);
-  let styler = {
-    backgroundImage: `url(${imgsrc})`
-  }
-  
-  return (
-    <div className={props.className + " cell-wrapper"}>
-      <button style={styler} className={"cell--inner icon" + props.value} onClick={props.onClick} />
-    </div>
-  );
-}
   
   function Trigger(props) {
     return(
@@ -62,32 +48,36 @@ class Rule extends React.Component {
         rule: props.rule 
     };
   }
-  
+
   renderCell(i, cell, rule, className) {
+
+    let spriteCellStyle = {
+      width: "32px",
+      height: "32px",
+      transform: "scale(" + 32 / this.props.spriteWidth + ")",
+      transformOrigin: "top left"
+  }
+    
     return(
       <Cell
-        cellIndex={ className }
-        value={ i }
-        className={ className }
-        spriteSheet={ this.props.spriteSheet }
+        cellIndex={className}
+        value={i}
+        className={className}
+        style={spriteCellStyle} 
+        spriteSheet={this.props.spriteSheet}
+        spriteWidth={this.props.spriteWidth} 
+        spriteHeight={this.props.spriteHeight} 
+        spritesPerRow={this.props.spritesPerRow}
         onClick={ () => this.props.onClick(cell, rule) }
       />
     );
   }
   
   render() {
-    /*
-    let divStyle = {
-      border: "1px solid white",
-      width: "30px",
-      height: "30px",
-      background: "#212529"
-    };
-    */
     let iconStyle = {
       /*border: "1px solid gray",*/
-      width: "30px",
-      height: "30px",
+      width: "32px",
+      height: "32px",
       textAlign:"center",
       background:"#fff",
       margin: "4px",
@@ -139,14 +129,12 @@ class Rule extends React.Component {
       <div className="rule">          
             
           <OverlayTrigger trigger="click" overlay={popover} placement="right" rootClose>
-          <Trigger
+            <Trigger
               cellIndex={6}
               value={this.state.rule[6]}
               className={"cell-trigger"}
               ref={this.attachRef}
             />
-          
-
           </OverlayTrigger>
           {this.renderCell(this.state.rule[0], 0, this.props.index, "cell1")}
           {this.renderCell(this.state.rule[1], 1, this.props.index, "cell2")}

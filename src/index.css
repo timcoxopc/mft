@@ -128,73 +128,53 @@ ol, ul {
   position: relative;
   margin: 0 14px 11px 0;
   float: left;
-  width: 185px;
-  height: 100px;
+  width: 199px;
+  height: 111px;
   border-radius: 7px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
 
-.cell-wrapper {
-  transform: scale(.9);
-  margin-left: -2px;
-  margin-top: -2px;
-}
-
 .cell1 {
   position: absolute;
-  left: 78px;
+  left: 85px;
   top: 7px;
 }
 
 .cell2 {
   position: absolute;
-  left: 49px;
-  top: 36px;
+  left: 52px;
+  top: 40px;
 }
 
 .cell3 {
   position: absolute;
-  left: 78px;
-  top: 36px;
+  left: 85px;
+  top: 40px;
 }
 
 .cell4 {
   position: absolute;
-  left: 107px;
-  top: 36px;
+  left: 118px;
+  top: 40px;
 }
 
 .cell5 {
   position: absolute;
-  left: 78px;
-  top: 65px;
+  left: 85px;
+  top: 73px;
 }
 
 .cell-output {
   position: absolute;
-  left: 147px;
-  top: 36px;
+  left: 158px;
+  top: 40px;
 }
 
 .cell-trigger { 
   position: absolute;
   left: 9px;
-  top: 36px;
-}
-
-.cell--inner {
-  border: 1px solid #ccc;
-  float: left;
-  font-size: 24px;
-  font-weight: bold;
-  line-height: 34px;
-  margin-right: -1px;
-  margin-top: -1px;
-  padding: 0;
-  text-align: center;
-  width: 34px;
-  height: 34px;
+  top: 40px;
 }
 
 .sprite--inner {
@@ -217,6 +197,10 @@ ol, ul {
 
 .cell-trigger .cell--inner {
   border-radius: 15px;
+  border: none;
+  background-color: #ddd;
+  width: 32px;
+  height: 32px;
 }
 
 .rule--cell:focus {
@@ -237,11 +221,11 @@ ol, ul {
 }
 
 .sprite-palette {
-  padding: 11px 0 0 10px;
+  padding: 11px 0 0 8px;
   position: fixed;
   z-index: 99;
   margin: -11px 0 0 -20px;
-  width: 85px;
+  width: 86px;
   height: 100%;
 }
 
@@ -253,7 +237,12 @@ ol, ul {
   transform: scale(0.9);
 }
 
-.sprite-palette--cell .cell--inner {
+.cell--button {
+  /*border: 1px solid #ccc;*/
+  border: none;
+}
+
+.sprite-palette .cell--button {
   border: none;
 }
 

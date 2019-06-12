@@ -1,7 +1,5 @@
 /*
-
   Use context see: https://www.reddit.com/r/reactjs/comments/9j4h9n/how_to_pass_a_function_to_a_grandchild_in_react/
-
 */
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -83,6 +81,9 @@ class RuleSet extends React.Component {
           index={i + 1} 
           rule={this.state.rules[i]} 
           spriteSheet={this.state.spriteSheet}
+          spriteWidth={this.state.spriteWidth}
+          spriteHeight={this.state.spriteHeight}
+          spritesPerRow={this.state.spritesPerRow}
           onClick={(cell, rule, value) => this.handleClick(cell, rule, value)} 
         />
       );
@@ -123,11 +124,21 @@ class RuleSet extends React.Component {
             <Route path="/open" exact component={ExportModal} />
           </Switch>
           
-          <SpritePalette spriteSheet={this.state.spriteSheet} spriteWidth={this.state.spriteWidth} spriteHeight={this.state.spriteHeight} spritesPerRow={this.state.spritesPerRow} onClick={(file) => this.setSprite(file)} />
+          <SpritePalette 
+            spriteSheet={this.state.spriteSheet} 
+            spriteWidth={this.state.spriteWidth} 
+            spriteHeight={this.state.spriteHeight} 
+            spritesPerRow={this.state.spritesPerRow} 
+            onClick={(file) => this.setSprite(file)} 
+          />
           <div className="rules-wrapper">
             {rules}
           </div>
-          <ImportModal show={this.state.modalShow} onHide={modalClose} openfile={(file) => this.openFile(file)} />
+          <ImportModal 
+            show={this.state.modalShow} 
+            onHide={modalClose} 
+            openfile={(file) => this.openFile(file)} 
+          />
         </div>
     );
   }

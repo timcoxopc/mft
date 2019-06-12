@@ -1,41 +1,6 @@
 import React from 'react';
+import Cell from "./Cell.js";
 
-const images = require.context('../public/img', true);
-
-function Cell(props) {
-    let code = props.spriteSheet;
-    let imgsrc = images(`./${code}.png`);
-
-    let offsetY = "0";
-    if(props.value < props.spritesPerRow){
-        console.log("&&")
-        offsetY = props.spriteHeight * -1 + "px"
-    } 
-    console.log("B", offsetY, props.value, props.spritesPerRow);
-    let position = props.spriteWidth * props.value * -1 + "px " + offsetY;
-    let spriteInnerStyle = {
-        float: "left",
-        fontSize: "24px",
-        fontWeight: "bold",
-        lineHeight: "34px",
-        marginRight: "-1px",
-        marginTop: "-1px",
-        padding: "0",
-        textAlign: "center",
-        width: props.spriteWidth,
-        height: props.spriteHeight,
-        border: "none",
-        backgroundImage: `url(${imgsrc})`,
-        backgroundPosition: position
-    }
-
-    return (
-      <div style={props.style}>
-        <button style={spriteInnerStyle} onClick={props.onClick} />
-      </div>
-    );
-  }
-  
 class SpritePalette extends React.Component {
   constructor(props) {
     super(props);
@@ -48,11 +13,11 @@ class SpritePalette extends React.Component {
   renderSprite(i, className) {
     
     let spriteCellStyle = {
-        margin: "4px 3px 0 0",
-        width: "29.7px",
-        height: "29.7px",
+        margin: "4px 4px 0 0",
+        width: "32px",
+        height: "32px",
         float: "left",
-        transform: "scale(" + 29.7 / this.props.spriteWidth + ")",
+        transform: "scale(" + 32 / this.props.spriteWidth + ")",
         transformOrigin: "top left"
     }
 
