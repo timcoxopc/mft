@@ -1,3 +1,13 @@
-handle click needs to set value at ruleset level instead of rule level - needs ruleIndex to do so.
+
+Add Bootstrap form elements to Export window
+Pass down Rules as props to Export window and use to call export json function 
+Add loadwindow (will require refactor up a level to EditRules?) No EditWindow Just chooses file and then RuleSet loads it 
+
 Differentiate between ruleValue and ruleIndex
-?Move rules to be stored as an array of arrays instead of an array of strings
+        <div>
+            <Rule index="1" rule={this.state.rules[0]} onClick={(cell, rule) => this.handleClick(cell, rule)} />
+            <Rule index="2" rule={this.state.rules[1]} onClick={(cell, rule) => this.handleClick(cell, rule)} />
+            <Rule index="3" rule={this.state.rules[2]} onClick={(cell, rule) => this.handleClick(cell, rule)} />
+            <Rule index="4" rule={this.state.rules[3]} onClick={(cell, rule) => this.handleClick(cell, rule)} />
+            <Rule index="5" rule={this.state.rules[4]} onClick={(cell, rule) => this.handleClick(cell, rule)} />
+        </div> 

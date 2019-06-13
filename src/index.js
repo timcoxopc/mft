@@ -1,87 +1,166 @@
 /*
-
   Use context see: https://www.reddit.com/r/reactjs/comments/9j4h9n/how_to_pass_a_function_to_a_grandchild_in_react/
-
 */
-
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Nav from 'react-bootstrap/Nav'
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import ExportModal from './ExportModal';
+import ImportModal from './ImportModal';
+import SpritePalette from './SpritePalette';
+import Rule from './Rule';
+import { BrowserRouter as Router } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import './index.css';
-
-function Cell(props) {
-  return (
-    <div className={"cell" + props.index}>
-      <button className={"cell--inner icon" + props.value} onClick={props.onClick} />
-    </div>
-  );
-}
-
-class Rule extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      rule: props.rule
-    };
-  }
-
-  renderCell(i, cell, rule) {
-    return(
-      <Cell
-        index={cell}
-        value={i}
-        onClick={() => this.props.onClick(cell, rule)}
-      />
-    );
-  }
-  
-  render() {
-    return (
-      <div className="rule">          
-          {this.renderCell(this.state.rule.substring(0, 1), 1, Number(this.props.rule))}
-          {this.renderCell(this.state.rule.substring(1, 2), 2, Number(this.props.rule))}
-          {this.renderCell(this.state.rule.substring(2, 3), 3, Number(this.props.rule))}
-          {this.renderCell(this.state.rule.substring(3, 4), 4, Number(this.props.rule))}
-          {this.renderCell(this.state.rule.substring(4, 5), 5, Number(this.props.rule))}
-      </div>
-    );
-  }
-}
 
 class RuleSet extends React.Component {
   constructor(props) {
     super(props);
+    let emptyRules = []
+    for (let i = 0; i < 40; i++) {
+      emptyRules.push([0, 0, 0, 0, 0, 0, 0]);
+    }
+
     this.state = {
-      rules: Array(5).fill("11211"),
+      rules: emptyRules,
+      modalShow: false,
+      spriteSheet: "chicken",
+      spriteWidth: 32,
+      spriteHeight: 32,
+      spritesPerRow: 8,
+      spriteIndex: 0   
     }
   }
-
-  handleClick(i, rule) {
-    let start = String(rule).substr(0, i - 1);
-    let char = String(Number(String(rule).substr(i, i + 1)) + 1);
-    let end = String(rule).substr(i + 2, rule.length);
-    console.log("rule: " + start + " : " + char + " : " + end);
+  
+  handleClick(i, rule, value) {
+    //console.log("*", i, rule, value);
+    const rules = this.state.rules.slice();
+    if(value === undefined && i !== 6){
+      rules[rule - 1][i] = this.state.spriteIndex;
+    } else {
+      document.body.click();
+      rules[rule - 1][i] = value;
+    }
     this.setState({
-      rule: start + char + end,
+      rules: rules
     });
+  }
 
+  openFile(file) {
+    console.log("Open file", file);
+    this.setState({ modalShow: false });
+  }
+  
+  setSprite(spriteIndex) {
+    this.setState({ spriteIndex: spriteIndex });
+  }
+
+  selectSpriteSheet(value) {
+    if(value !== "chicken") {
+      this.setState({
+        spriteWidth: 16,
+        spriteHeight: 16
+      });
+    } else {
+      this.setState({
+        spriteWidth: 32,
+        spriteHeight: 32
+      });
+    }
+    this.setState({ spriteSheet: value });
   }
 
   render() {
+    const totalRules = 40;
+    let rules = [];
+    for (let i = 0; i < totalRules; i++) {
+      rules.push(
+        <Rule 
+          key={i}
+          index={i + 1} 
+          rule={this.state.rules[i]} 
+          spriteSheet={this.state.spriteSheet}
+          spriteWidth={this.state.spriteWidth}
+          spriteHeight={this.state.spriteHeight}
+          spritesPerRow={this.state.spritesPerRow}
+          onClick={(cell, rule, value) => this.handleClick(cell, rule, value)} 
+        />
+      );
+    }
+
+    let modalClose = () => this.setState({ modalShow: false });
+
     return (
         <div>
-            <Rule index="1" rule={this.state.rules[0]} onClick={(cell, rule) => this.handleClick(cell, rule)} />
-            <Rule index="2" rule={this.state.rules[1]} onClick={(cell, rule) => this.handleClick(cell, rule)} />
-            <Rule index="3" rule={this.state.rules[2]} onClick={(cell, rule) => this.handleClick(cell, rule)} />
-            <Rule index="4" rule={this.state.rules[3]} onClick={(cell, rule) => this.handleClick(cell, rule)} />
-            <Rule index="5" rule={this.state.rules[4]} onClick={(cell, rule) => this.handleClick(cell, rule)} />
+          <Navbar bg="dark" variant="dark" expand="lg" fixed="top">
+            <Navbar.Brand href="#home">Muffit</Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+              <Nav className="mr-auto">
+              <NavDropdown title="File" id="basic-nav-dropdown">
+                <NavDropdown.Item href="/new">New</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item href="/open">Open...</NavDropdown.Item>
+                <NavDropdown.Item href="/export">Export...</NavDropdown.Item>
+              </NavDropdown>
+              <NavDropdown title="Sprites" id="basic-nav-dropdown" onSelect={(e) => this.selectSpriteSheet(e)}>
+                <NavDropdown.Item href="/import">Import...</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item eventKey="chicken">Ninja</NavDropdown.Item>
+                <NavDropdown.Item eventKey="owls">Owls and Butterflies</NavDropdown.Item>
+                <NavDropdown.Item eventKey="mushrooms">Mushrooms</NavDropdown.Item>
+                <NavDropdown.Item eventKey="desert">Desert</NavDropdown.Item>
+                <NavDropdown.Item eventKey="caterpillar">Caterpillar</NavDropdown.Item>
+                <NavDropdown.Item eventKey="bomber">Bomber</NavDropdown.Item>
+                <NavDropdown.Item eventKey="snake">Snake</NavDropdown.Item>
+              </NavDropdown>
+              </Nav>
+            </Navbar.Collapse>
+          </Navbar>
+          <Switch>
+            <Route path="/new" exact component={ExportModal} />
+            <Route path="/export" exact component={ExportModal} />
+            <Route path="/open" exact component={ExportModal} />
+          </Switch>
+          
+          <SpritePalette 
+            spriteSheet={this.state.spriteSheet} 
+            spriteWidth={this.state.spriteWidth} 
+            spriteHeight={this.state.spriteHeight} 
+            spritesPerRow={this.state.spritesPerRow} 
+            onClick={(file) => this.setSprite(file)} 
+          />
+          <div className="rules-wrapper">
+            {rules}
+          </div>
+          <ImportModal 
+            show={this.state.modalShow} 
+            onHide={modalClose} 
+            openfile={(file) => this.openFile(file)} 
+          />
         </div>
     );
   }
 }
 
 // ========================================
+/*
+function downloadObjectAsJson(exportObj, exportName){
+  var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj));
+  var downloadAnchorNode = document.createElement('a');
+  downloadAnchorNode.setAttribute("href",     dataStr);
+  downloadAnchorNode.setAttribute("download", exportName + ".json");
+  document.body.appendChild(downloadAnchorNode); // required for firefox
+  downloadAnchorNode.click();
+  downloadAnchorNode.remove();
+}
+*/
+// ========================================
 
 ReactDOM.render(
-  <RuleSet />,
+  <Router>
+    <RuleSet />
+  </Router>, 
   document.getElementById('root')
 );
