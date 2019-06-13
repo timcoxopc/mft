@@ -1,0 +1,25 @@
+RulesEditor
+    ExportModal
+    LoadModal
+    LoadSpriteSheetModal
+    OptionsModal ()
+    NavBar
+    SpriteSheet
+    RuleSet 
+        Rule
+            Cell
+Map
+    NavBar
+    CellGrid 
+        Cell
+    Palette
+SEdit
+    NavBar
+    LoadSpriteSheetModal
+    CellGrid
+        Cell
+    ColourPalette
+    SpriteSelector
+Run
+    NavBar
+    Map
