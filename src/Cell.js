@@ -18,21 +18,26 @@ function Cell(props) {
         backgroundColor: "#ddd"
     }
     
+    let imgsrc = "./img/blank.png";
+    let position = "";
     if(props.value !== 0) {
-      let imgsrc = images(`./${code}.png`);
+      imgsrc = images(`./${code}.png`);
       let offsetY = "0";
       if(props.value > props.spritesPerRow){
         offsetY = props.spriteHeight * -1 + "px"
       }
-      let position = props.spriteWidth * props.value * -1 + "px " + offsetY;
+      position = props.spriteWidth * ((props.value - 1) % props.spritesPerRow) * -1 + "px " + offsetY;
       
-      spriteInnerStyle.backgroundImage = `url(${imgsrc})`;
-      spriteInnerStyle.backgroundPosition = position;
+      //spriteInnerStyle.backgroundImage = `url(${imgsrc})`;
+      spriteInnerStyle.objectPosition = position;
+      spriteInnerStyle.objectFit = "none";
+      spriteInnerStyle.imageRendering = "crisp-edges";
+      //<button style={spriteInnerStyle} className="cell--button" onClick={props.onClick} />
     } 
 
     return (
       <div style={props.style} className={props.className}>
-        <button style={spriteInnerStyle} className="cell--button" onClick={props.onClick} />
+        <img src = {`${imgsrc}`} style={spriteInnerStyle} className="cell--button" onClick={props.onClick} />
       </div>
     );
 }
