@@ -4,15 +4,8 @@ const images = require.context('../public/img', true);
 
 function Cell(props) {
     let code = props.spriteSheet;
-
     
     let spriteInnerStyle = {
-        float: "left",
-        fontSize: "24px",
-        fontWeight: "bold",
-        lineHeight: "34px",
-        padding: "0",
-        textAlign: "center",
         width: props.spriteWidth,
         height: props.spriteHeight,
         backgroundColor: "#ddd"
@@ -28,16 +21,14 @@ function Cell(props) {
       }
       position = props.spriteWidth * ((props.value - 1) % props.spritesPerRow) * -1 + "px " + offsetY;
       
-      //spriteInnerStyle.backgroundImage = `url(${imgsrc})`;
       spriteInnerStyle.objectPosition = position;
       spriteInnerStyle.objectFit = "none";
       spriteInnerStyle.imageRendering = "crisp-edges";
-      //<button style={spriteInnerStyle} className="cell--button" onClick={props.onClick} />
     } 
 
     return (
       <div style={props.style} className={props.className}>
-        <img src = {`${imgsrc}`} style={spriteInnerStyle} className="cell--button" onClick={props.onClick} />
+        <img src = {`${imgsrc}`} alt="cell" style={spriteInnerStyle} className="cell--button" onClick={props.onClick} />
       </div>
     );
 }

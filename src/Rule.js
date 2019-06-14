@@ -30,10 +30,43 @@ import trigger24 from './img/triggers/trigger4.png';
 import trigger25 from './img/triggers/loop2.png';
   
   function Trigger(props) {
+    let borderClass;
+    console.log("@", props.value);
+    if(props.value === 0) {
+      borderClass = "trigger--is-empty";
+    } else {
+      borderClass = "trigger--not-empty"
+    }
     return(
       <div className={props.className}>
         <button 
-          className={"cell--inner cell--trigger trigger" + props.value} 
+          className={borderClass + " cell--inner cell--trigger trigger" + props.value} 
+          onClick={props.onClick} 
+        />
+      </div>
+    );
+  }
+
+  function Arrow(props) {
+    let imgsrc;
+    if(props.value === 1) {
+      imgsrc = "./img/arrow-selected.png";
+    } else {
+      imgsrc = "./img/arrow.png";
+    }
+
+    let spriteInnerStyle = {
+      width: 32,
+      height: 32,
+    }
+
+    return(
+      <div className={props.className}>
+        <img 
+          src = {`${imgsrc}`} 
+          alt = "Arrow"
+          style={spriteInnerStyle} 
+          className="cell--button" 
           onClick={props.onClick} 
         />
       </div>
@@ -142,6 +175,11 @@ class Rule extends React.Component {
           {this.renderCell(this.state.rule[3], 3, this.props.index, "cell4")}
           {this.renderCell(this.state.rule[4], 4, this.props.index, "cell5")}
           {this.renderCell(this.state.rule[5], 5, this.props.index, "cell-output")}
+          <Arrow
+            value={this.state.rule[7]}
+            className={"arrow-wrapper"}
+            onClick={ () => this.props.onClick(7, this.props.index)}
+          />
       </div>
     );
   }

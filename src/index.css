@@ -18,6 +18,14 @@ ol, ul {
   margin-bottom: 10px;
 }
 
+.trigger--is-empty {
+  border: 1px solid #aaa;
+}
+
+.trigger--not-empty {
+  border: none;
+}
+
 .trigger1 {
   background: url("./img/triggers/arrow_left.png");
 }
@@ -177,6 +185,12 @@ ol, ul {
   top: 40px;
 }
 
+.arrow-wrapper {
+  position: absolute;
+  left: 158px;
+  top: 2px;
+}
+
 .sprite--inner {
   float: left;
   font-size: 24px;
@@ -197,7 +211,6 @@ ol, ul {
 
 .cell-trigger .cell--inner {
   border-radius: 15px;
-  border: none;
   background-color: #ddd;
   width: 32px;
   height: 32px;

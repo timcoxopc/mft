@@ -19,7 +19,7 @@ class RuleSet extends React.Component {
     super(props);
     let emptyRules = []
     for (let i = 0; i < 40; i++) {
-      emptyRules.push([0, 0, 0, 0, 0, 0, 0]);
+      emptyRules.push([0, 0, 0, 0, 0, 0, 0, 0]);
     }
 
     this.state = {
@@ -36,11 +36,17 @@ class RuleSet extends React.Component {
   handleClick(i, rule, value) {
     //console.log("*", i, rule, value);
     const rules = this.state.rules.slice();
-    if(value === undefined && i !== 6){
+    if(value === undefined && i <= 6) {
       rules[rule - 1][i] = this.state.spriteIndex;
-    } else {
-      document.body.click();
+    } else if (i === 6) {
+      document.body.click(); // Trigger popover to hide
       rules[rule - 1][i] = value;
+    } else if (i === 7) {
+      if(rules[rule - 1][i] === 0) {
+        rules[rule - 1][i] = 1;
+      } else {
+        rules[rule - 1][i] = 0;
+      }
     }
     this.setState({
       rules: rules
