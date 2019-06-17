@@ -1,6 +1,3 @@
-/*
-  Use context see: https://www.reddit.com/r/reactjs/comments/9j4h9n/how_to_pass_a_function_to_a_grandchild_in_react/
-*/
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Nav from 'react-bootstrap/Nav'
@@ -19,7 +16,7 @@ class RuleSet extends React.Component {
     super(props);
     let emptyRules = []
     for (let i = 0; i < 40; i++) {
-      emptyRules.push([0, 0, 0, 0, 0, 0, 0, 0]);
+      emptyRules.push([0, 0, 0, 0, 0, 0, 0, 0, 1]);
     }
 
     this.state = {
@@ -29,16 +26,16 @@ class RuleSet extends React.Component {
       spriteWidth: 32,
       spriteHeight: 32,
       spritesPerRow: 8,
-      spriteIndex: 0   
+      spriteIndex: 1  
     }
   }
   
   handleClick(i, rule, value) {
-    //console.log("*", i, rule, value);
+    console.log("*", i, rule, value);
     const rules = this.state.rules.slice();
     if(value === undefined && i <= 6) {
       rules[rule - 1][i] = this.state.spriteIndex;
-    } else if (i === 6) {
+    } else if (i === 6 || i === 8) {
       document.body.click(); // Trigger popover to hide
       rules[rule - 1][i] = value;
     } else if (i === 7) {
@@ -124,6 +121,7 @@ class RuleSet extends React.Component {
               </Nav>
             </Navbar.Collapse>
           </Navbar>
+
           <Switch>
             <Route path="/new" exact component={ExportModal} />
             <Route path="/export" exact component={ExportModal} />
@@ -131,15 +129,18 @@ class RuleSet extends React.Component {
           </Switch>
           
           <SpritePalette 
+            active={this.state.spriteIndex}
             spriteSheet={this.state.spriteSheet} 
             spriteWidth={this.state.spriteWidth} 
             spriteHeight={this.state.spriteHeight} 
             spritesPerRow={this.state.spritesPerRow} 
             onClick={(file) => this.setSprite(file)} 
           />
+
           <div className="rules-wrapper">
             {rules}
           </div>
+
           <ImportModal 
             show={this.state.modalShow} 
             onHide={modalClose} 

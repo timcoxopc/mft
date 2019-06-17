@@ -2,7 +2,6 @@ import React from 'react';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Popover from 'react-bootstrap/Popover'
 import Cell from "./Cell.js";
-
 import trigger1 from './img/triggers/arrow_left.png';
 import trigger2 from './img/triggers/arrow_up.png';
 import trigger3 from './img/triggers/arrow_right.png';
@@ -28,24 +27,48 @@ import trigger22 from './img/triggers/trigger2.png';
 import trigger23 from './img/triggers/trigger3.png';
 import trigger24 from './img/triggers/trigger4.png';
 import trigger25 from './img/triggers/loop2.png';
-  
+const arrayTrigger = ["", trigger1, trigger2, trigger3, trigger4, trigger5, trigger6, trigger7, trigger8, trigger9, trigger10, trigger11, trigger12, trigger13, trigger14, trigger15, trigger16, trigger17, trigger18, trigger19, trigger20, trigger21, trigger22, trigger23, trigger24, trigger25];
+
   function Trigger(props) {
+
     let borderClass;
-    console.log("@", props.value);
     if(props.value === 0) {
       borderClass = "trigger--is-empty";
     } else {
       borderClass = "trigger--not-empty"
     }
+
+    
+    let triggerButtonStyle = {
+      backgroundImage:"url(" + arrayTrigger[props.value] + ")",
+      backgroundSize: "contain"
+    }
+    console.log("!!", triggerButtonStyle.backgroundSize);
+    
+
     return(
       <div className={props.className}>
-        <button 
-          className={borderClass + " cell--inner cell--trigger trigger" + props.value} 
-          onClick={props.onClick} 
-        />
+          <button 
+            style = {triggerButtonStyle}
+            className={borderClass + " cell--inner cell--trigger"} 
+            onClick = {props.onClick}
+          />
       </div>
     );
   }
+/*
+  <button 
+  className={borderClass + " cell--inner cell--trigger trigger" + props.value} 
+  onClick={props.onClick} 
+/>
+*/
+  /*
+  <button 
+  style = {triggerButtonStyle}
+  className={borderClass + " cell--inner cell--trigger"} 
+  onClick = {props.onClick}
+/>
+*/
 
   function Arrow(props) {
     let imgsrc;
@@ -83,26 +106,50 @@ class Rule extends React.Component {
   }
 
   renderCell(i, cell, rule, className) {
-
     let spriteCellStyle = {
       width: "32px",
       height: "32px",
       transform: "scale(" + 32 / this.props.spriteWidth + ")",
       transformOrigin: "top left"
-  }
+    }
     
     return(
       <Cell
-        cellIndex={className}
-        value={i}
-        className={className}
-        style={spriteCellStyle} 
-        spriteSheet={this.props.spriteSheet}
-        spriteWidth={this.props.spriteWidth} 
-        spriteHeight={this.props.spriteHeight} 
-        spritesPerRow={this.props.spritesPerRow}
+        cellIndex = {className}
+        value = {i}
+        className = {className}
+        style = {spriteCellStyle} 
+        spriteSheet = {this.props.spriteSheet}
+        spriteWidth = {this.props.spriteWidth} 
+        spriteHeight = {this.props.spriteHeight} 
+        spritesPerRow = {this.props.spritesPerRow}
+        renderStyle = "crisp-edges"
         onClick={ () => this.props.onClick(cell, rule) }
       />
+    );
+  }
+
+  renderSpecial(i, cell, rule) {
+    let specialsStyle = {
+      transform: "scale(0.4)",
+      transformOrigin: "top left",
+      float: "left",
+      width: "72px",
+      height: "25px"
+    }
+
+    return(
+      <Cell
+        key={i}
+        value = {i} 
+        spriteSheet = "specials"
+        spriteWidth = {181} 
+        spriteHeight = {67} 
+        spritesPerRow = {3}
+        renderStyle = "unset"
+        style = {specialsStyle}
+        onClick = { () => this.props.onClick(cell, rule, i) }
+      />   
     );
   }
   
@@ -122,11 +169,11 @@ class Rule extends React.Component {
       paddingBottom: "7px"
     }
     let imgStyle = {
-      width: "28px",    
-      height: "28px"
+      width: "32px",    
+      height: "32px"
     }
 
-    const popover = (
+    const triggerPopover = (
       <Popover style={popoverStyle} id="trigger-popover" title="Trigger">
         <div >
           <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(6, this.props.index, 1)} style={imgStyle} src={trigger1} /></button>
@@ -157,11 +204,34 @@ class Rule extends React.Component {
         </div>
       </Popover>
     );
-  
+
+    let specialsPopoverStyle = {
+      paddingBottom: "7px",
+      maxWidth: "242px"
+    }
+
+    let specials = [];
+    for(let i = 2; i < 28; i++) {
+      specials.push(this.renderSpecial(i, 8, this.props.index));
+    }
+    const specialPopover = (
+      <Popover style={specialsPopoverStyle} id="special-popover" title="Special">
+        { specials }
+      </Popover>
+    );
+    
+    let specialsStyle = {
+      transform: "scale(0.4)",
+      transformOrigin: "top left",
+      position: "absolute",
+      left: "120px",
+      top: "78px"
+    }
+
     return (
       <div className="rule">          
             
-          <OverlayTrigger trigger="click" overlay={popover} placement="right" rootClose>
+          <OverlayTrigger trigger="click" overlay={triggerPopover} placement="right" rootClose>
             <Trigger
               cellIndex={6}
               value={this.state.rule[6]}
@@ -180,6 +250,19 @@ class Rule extends React.Component {
             className={"arrow-wrapper"}
             onClick={ () => this.props.onClick(7, this.props.index)}
           />
+          <OverlayTrigger trigger="click" overlay={specialPopover} placement="right" rootClose>
+            <Cell
+              ref={this.attachRef}
+              value = {this.state.rule[8]} 
+              spriteSheet = "specials"
+              spriteWidth = {181} 
+              spriteHeight = {67} 
+              spritesPerRow = {3}
+              renderStyle = "unset"
+              style = {specialsStyle}
+              onClick = { () => this.props.onClick(8, this.props.index) }
+            />
+          </OverlayTrigger>
       </div>
     );
   }

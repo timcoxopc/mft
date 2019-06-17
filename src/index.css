@@ -26,111 +26,6 @@ ol, ul {
   border: none;
 }
 
-.trigger1 {
-  background: url("./img/triggers/arrow_left.png");
-}
-
-.trigger2 {
-  background: url("./img/triggers/arrow_up.png");
-}
-
-.trigger3 {
-  background: url("./img/triggers/arrow_right.png");
-}
-
-.trigger4 {
-  background: url("./img/triggers/arrow_down.png");
-}
-
-.trigger5 {
-  background: url("./img/triggers/tap.png");
-}
-
-.trigger6 {background: url("./img/triggers/button1.png")}
-.trigger7 {background: url("./img/triggers/button2.png")}
-.trigger8 {background: url("./img/triggers/1-2-random.png")}
-.trigger9 {background: url("./img/triggers/2-2-random.png")}
-.trigger10 {background: url("./img/triggers/step1.png")}
-.trigger11 {background: url("./img/triggers/timer1.png")}
-.trigger12{background: url("./img/triggers/timer2.png")}
-.trigger13 {background: url("./img/triggers/timer1.png")}
-.trigger14 {background: url("./img/triggers/loop.png")}
-.trigger15 {background: url("./img/triggers/loop1.png")}
-.trigger16 {background: url("./img/triggers/1-4-random.png")}
-.trigger17 {background: url("./img/triggers/2-4-random.png")}
-.trigger18 {background: url("./img/triggers/3-4-random.png")}
-.trigger19 {background: url("./img/triggers/4-4-random.png")}
-.trigger20 {background: url("./img/triggers/step2.png")}
-.trigger21 {background: url("./img/triggers/trigger1.png")}
-.trigger22 {background: url("./img/triggers/trigger2.png")}
-.trigger23 {background: url("./img/triggers/trigger3.png")}
-.trigger24 {background: url("./img/triggers/trigger4.png")}
-.trigger25 {background: url("./img/triggers/loop2.png")}
-
-.icon1 {
-  background-position: -32px  -32px;
-}
-
-.icon2 {
-  background-position: -64px  -32px;
-}
-
-.icon3 {
-  background-position: -96px  -32px;
-}
-
-.icon4 {
-  background-position: -128px  -32px;
-}
-
-.icon5 {
-  background-position: -160px  -32px;
-}
-
-.icon6 {
-  background-position: -192px  -32px;
-}
-
-.icon7 {
-  background-position: -224px  -32px;
-}
-
-.icon8 {
-  background-position: -256px  -32px;
-}
-
-.icon9 {
-  background-position: -32px 0;
-}
-
-.icon10 {
-  background-position: -64px  0;
-}
-
-.icon11 {
-  background-position: -96px  0;
-}
-
-.icon12 {
-  background-position: -128px  0;
-}
-
-.icon13 {
-  background-position: -160px  0;
-}
-
-.icon14 {
-  background-position: -192px  0;
-}
-
-.icon15 {
-  background-position: -224px  0;
-}
-
-.icon16 {
-  background-position: -256px  0;
-}
-
 .rule {
   background: #fff;
   position: relative;
@@ -230,7 +125,7 @@ ol, ul {
 }
 
 .popover {
-  max-width: 216px
+  max-width: 186px
 }
 
 .sprite-palette {

@@ -11,14 +11,19 @@ class SpritePalette extends React.Component {
   }
   
   renderSprite(i, className) {
-    
+    let outlineStyle = "none";
+    if(i === this.props.active) {
+      let borderWidth = 3 / (32 / this.props.spriteWidth);
+      outlineStyle = borderWidth + "px solid red";
+    }
+
     let spriteCellStyle = {
-        margin: "4px 4px 0 0",
-        width: "32px",
-        height: "32px",
-        float: "left",
-        transform: "scale(" + 32 / this.props.spriteWidth + ")",
-        transformOrigin: "top left"
+      margin: "6px 6px 0 0",
+      width: "32px",
+      height: "32px",
+      float: "left",
+      transform: "scale(" + 32 / this.props.spriteWidth + ")",
+      transformOrigin: "top left"
     }
 
     return(
@@ -27,15 +32,50 @@ class SpritePalette extends React.Component {
         spriteWidth={this.props.spriteWidth}
         spriteHeight={this.props.spriteHeight}
         spritesPerRow={this.props.spritesPerRow}
+        renderStyle = "crisp-edges"
+        outlineStyle={outlineStyle}
         value={i}
         style={spriteCellStyle}        
         onClick={() => this.props.onClick(i)}
       />
     );
-    // className={"sprite-palette--cell"}
   }
+  
+  renderNoFill() {
+    let spriteCellStyle = {
+      margin: "6px 6px 0 0",
+      width: "32px",
+      height: "32px",
+      float: "left",
+    }
+  
+    let borderStyle = "";
+    if(this.props.active === 0) {
+      let borderWidth = 3 / (32 / this.props.spriteWidth);
+      borderStyle = borderWidth + "px solid red";
+    }
+
+    return(
+      <Cell 
+        spriteSheet="no-fill"
+        spriteWidth={32}
+        spriteHeight={32}
+        spritesPerRow={1}
+        renderStyle = ""
+        outlineStyle={borderStyle}
+        style={spriteCellStyle}
+        value={null}
+        onClick={() => this.props.onClick(0)}
+      />
+    );
+  }
+  // className={"sprite-palette--cell"}
 
   render() {  
+    // Styles for-no fill only - rationalise
+ 
+    // end no-fill styles
+
     return (
         <div className="sprite-palette bg-dark">  
             {this.renderSprite(1)}
@@ -53,7 +93,8 @@ class SpritePalette extends React.Component {
             {this.renderSprite(13)}
             {this.renderSprite(14)}
             {this.renderSprite(15)}
-            {this.renderSprite(16)}
+            {this.renderSprite(16)}            
+            {this.renderNoFill()}
         </div>
     );
   }
