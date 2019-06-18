@@ -56,19 +56,6 @@ const arrayTrigger = ["", trigger1, trigger2, trigger3, trigger4, trigger5, trig
       </div>
     );
   }
-/*
-  <button 
-  className={borderClass + " cell--inner cell--trigger trigger" + props.value} 
-  onClick={props.onClick} 
-/>
-*/
-  /*
-  <button 
-  style = {triggerButtonStyle}
-  className={borderClass + " cell--inner cell--trigger"} 
-  onClick = {props.onClick}
-/>
-*/
 
   function Arrow(props) {
     let imgsrc;

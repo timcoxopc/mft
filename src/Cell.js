@@ -32,7 +32,6 @@ function Cell(props) {
       spriteInnerStyle.imageRendering = props.renderStyle;
     }
 
-
     return (
       <div style={props.style} className={props.className}>
         <img src = {`${imgsrc}`} alt="cell" style={spriteInnerStyle} className="cell--button" onClick={props.onClick} />
