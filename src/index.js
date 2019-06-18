@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import MainNavbar from './MainNavbar';
 import ExportModal from './ExportModal';
 import ImportModal from './ImportModal';
+import RuleSet from './RuleSet';
 import SpritePalette from './SpritePalette';
 import Rule from './Rule';
 import { BrowserRouter as Router } from "react-router-dom";
@@ -17,7 +18,7 @@ const SPECIAL1 = 8;
 //const SPECIAL2 = 9;
 const ARROW = 10;
 
-class RuleSet extends React.Component {
+class Muffit extends React.Component {
 
   constructor(props) {
     super(props);
@@ -88,7 +89,6 @@ class RuleSet extends React.Component {
   }
 
   selectSpriteSheet(value) {
-    //console.log("VALUE", value);
     if(value !== "chicken") {
       this.setState({
         spriteWidth: 16,
@@ -104,23 +104,6 @@ class RuleSet extends React.Component {
   }
 
   render() {
-    const totalRules = 40;
-    let rules = [];
-    //console.log("Rule #1 " + this.state.rules[0]);
-    for (let i = 0; i < totalRules; i++) {
-      rules.push(
-        <Rule 
-          key={i}
-          index={i + 1} 
-          rule={this.state.rules[i]} 
-          spriteSheet={this.state.spriteSheet}
-          spriteWidth={this.state.spriteWidth}
-          spriteHeight={this.state.spriteHeight}
-          spritesPerRow={this.state.spritesPerRow}
-          onClick={(cell, rule, value) => this.handleClick(cell, rule, value)} 
-        />
-      );
-    }
 
     let modalClose = () => this.setState({ modalShow: false });
 
@@ -132,18 +115,16 @@ class RuleSet extends React.Component {
             onImportRules={() => this.importRules()}
           />
 
-          <SpritePalette 
-            active={this.state.spriteIndex}
+          <RuleSet 
+            rules={this.state.rules.slice()}
+            spriteIndex={this.state.spriteIndex}
             spriteSheet={this.state.spriteSheet} 
             spriteWidth={this.state.spriteWidth} 
             spriteHeight={this.state.spriteHeight} 
             spritesPerRow={this.state.spritesPerRow} 
-            onClick={(index) => this.setSprite(index)} 
+            onRuleClick={(i, rule, value) => this.handleClick(i, rule, value)} 
+            onSpriteSelect={(e) => this.setSprite(e)}
           />
-
-          <div className="rules-wrapper">
-            {rules}
-          </div>
 
           <ImportModal 
             show={this.state.modalShow} 
@@ -171,7 +152,7 @@ function downloadObjectAsJson(exportObj, exportName){
 
 ReactDOM.render(
   <Router>
-    <RuleSet />
+    <Muffit />
   </Router>, 
   document.getElementById('root')
 );
