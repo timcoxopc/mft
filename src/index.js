@@ -75,6 +75,9 @@ class RuleSet extends React.Component {
     const totalRules = 40;
     let rules = [];
     for (let i = 0; i < totalRules; i++) {
+      
+      console.log("Rule #" + i + " " + this.state.rules[i]);
+      
       rules.push(
         <Rule 
           key={i}

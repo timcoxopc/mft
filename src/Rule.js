@@ -2,6 +2,9 @@ import React from 'react';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Popover from 'react-bootstrap/Popover'
 import Cell from "./Cell.js";
+import Trigger from "./Trigger.js";
+import Arrow from "./Arrow.js";
+
 import trigger1 from './img/triggers/arrow_left.png';
 import trigger2 from './img/triggers/arrow_up.png';
 import trigger3 from './img/triggers/arrow_right.png';
@@ -27,61 +30,24 @@ import trigger22 from './img/triggers/trigger2.png';
 import trigger23 from './img/triggers/trigger3.png';
 import trigger24 from './img/triggers/trigger4.png';
 import trigger25 from './img/triggers/loop2.png';
-const arrayTrigger = ["", trigger1, trigger2, trigger3, trigger4, trigger5, trigger6, trigger7, trigger8, trigger9, trigger10, trigger11, trigger12, trigger13, trigger14, trigger15, trigger16, trigger17, trigger18, trigger19, trigger20, trigger21, trigger22, trigger23, trigger24, trigger25];
 
-  function Trigger(props) {
+/*
 
-    let borderClass;
-    if(props.value === 0) {
-      borderClass = "trigger--is-empty";
-    } else {
-      borderClass = "trigger--not-empty"
-    }
+Rule indexes
 
-    
-    let triggerButtonStyle = {
-      backgroundImage:"url(" + arrayTrigger[props.value] + ")",
-      backgroundSize: "contain"
-    }
-    console.log("!!", triggerButtonStyle.backgroundSize);
-    
+0 - Trigger Main
+1 - Trigger Secondary / Conditional (eg random) - Reserved for future use
+2 - Cell 1
+3 - Cell 2 
+4 - Cell 3
+5 - Cell 4 
+6 - Cell 5
+7 - Cell Output
+8 - Special Output Main
+9 - Special Output Secondary - Reserved for future use (eg sound)
+10 - Arrow
 
-    return(
-      <div className={props.className}>
-          <button 
-            style = {triggerButtonStyle}
-            className={borderClass + " cell--inner cell--trigger"} 
-            onClick = {props.onClick}
-          />
-      </div>
-    );
-  }
-
-  function Arrow(props) {
-    let imgsrc;
-    if(props.value === 1) {
-      imgsrc = "./img/arrow-selected.png";
-    } else {
-      imgsrc = "./img/arrow.png";
-    }
-
-    let spriteInnerStyle = {
-      width: 32,
-      height: 32,
-    }
-
-    return(
-      <div className={props.className}>
-        <img 
-          src = {`${imgsrc}`} 
-          alt = "Arrow"
-          style={spriteInnerStyle} 
-          className="cell--button" 
-          onClick={props.onClick} 
-        />
-      </div>
-    );
-  }
+*/
 
 class Rule extends React.Component {
   constructor(props) {
