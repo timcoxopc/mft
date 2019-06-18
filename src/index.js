@@ -9,12 +9,21 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { Route, Switch } from "react-router-dom";
 import './index.css';
 
+const TRIGGER1 = 0;
+//const TRIGGER2 = 1;
+const CELL1 = 2;
+const OUTPUT = 7;
+const SPECIAL1 = 8;
+//const SPECIAL2 = 9;
+const ARROW = 10;
+
 class RuleSet extends React.Component {
+
   constructor(props) {
     super(props);
     let emptyRules = []
     for (let i = 0; i < 40; i++) {
-      emptyRules.push([0, 0, 0, 0, 0, 0, 0, 0, 1]);
+      emptyRules.push([0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0]);
     }
 
     this.state = {
@@ -31,12 +40,12 @@ class RuleSet extends React.Component {
   handleClick(i, rule, value) {
     //console.log("*", i, rule, value);
     const rules = this.state.rules.slice();
-    if(value === undefined && i <= 6) {
+    if(value === undefined && (i >= CELL1 && i <= OUTPUT)) {
       rules[rule - 1][i] = this.state.spriteIndex;
-    } else if (i === 6 || i === 8) {
+    } else if (i === TRIGGER1 || i === SPECIAL1) {
       document.body.click(); // Trigger popover to hide
       rules[rule - 1][i] = value;
-    } else if (i === 7) {
+    } else if (i === ARROW) {
       if(rules[rule - 1][i] === 0) {
         rules[rule - 1][i] = 1;
       } else {
@@ -49,6 +58,7 @@ class RuleSet extends React.Component {
   }
 
   openFile(file) {
+    console.log("OPEN file ", file);
     this.setState({ modalShow: false });
   }
   
@@ -56,7 +66,29 @@ class RuleSet extends React.Component {
     this.setState({ spriteIndex: spriteIndex });
   }
 
+  exportRules() {
+    downloadObjectAsJson(this.state.rules, "test");
+  }
+
+  importRules() {
+    fetch('./files/test.mft')
+    .then((res) => res.json())
+    .then((data) => {
+      const rules = this.state.rules.slice();
+      for (let i = 0; i < 40; i++) {
+        for(let j = 0; j < rules[i].length; j++) {
+          rules[i][j] = data[i][j];
+        }
+      }
+  
+      this.setState ({
+        rules: rules
+      });
+    })
+  }
+
   selectSpriteSheet(value) {
+    //console.log("VALUE", value);
     if(value !== "chicken") {
       this.setState({
         spriteWidth: 16,
@@ -74,10 +106,8 @@ class RuleSet extends React.Component {
   render() {
     const totalRules = 40;
     let rules = [];
+    //console.log("Rule #1 " + this.state.rules[0]);
     for (let i = 0; i < totalRules; i++) {
-      
-      console.log("Rule #" + i + " " + this.state.rules[i]);
-      
       rules.push(
         <Rule 
           key={i}
@@ -96,14 +126,12 @@ class RuleSet extends React.Component {
 
     return (
         <div>
-          <MainNavbar onSelect={(e) => this.selectSpriteSheet(e)} />
+          <MainNavbar 
+            onSelect={(e) => this.selectSpriteSheet(e)} 
+            onExportRules={() => this.exportRules()}
+            onImportRules={() => this.importRules()}
+          />
 
-          <Switch>
-            <Route path="/new" exact component={ExportModal} />
-            <Route path="/export" exact component={ExportModal} />
-            <Route path="/open" exact component={ExportModal} />
-          </Switch>
-          
           <SpritePalette 
             active={this.state.spriteIndex}
             spriteSheet={this.state.spriteSheet} 
@@ -128,17 +156,17 @@ class RuleSet extends React.Component {
 }
 
 // ========================================
-/*
+
 function downloadObjectAsJson(exportObj, exportName){
   var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj));
   var downloadAnchorNode = document.createElement('a');
   downloadAnchorNode.setAttribute("href",     dataStr);
-  downloadAnchorNode.setAttribute("download", exportName + ".json");
+  downloadAnchorNode.setAttribute("download", exportName + ".mft");
   document.body.appendChild(downloadAnchorNode); // required for firefox
   downloadAnchorNode.click();
   downloadAnchorNode.remove();
 }
-*/
+
 // ========================================
 
 ReactDOM.render(

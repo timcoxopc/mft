@@ -55,7 +55,7 @@ class SpritePalette extends React.Component {
     if(this.props.active === 0) {
       outlineStyle = "3px solid red";
     }
-    console.log("Render no fill",  this.props.active);
+
     return(
       <Cell 
         spriteSheet="no-fill"

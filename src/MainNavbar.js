@@ -13,8 +13,8 @@ function MainNavbar(props) {
               <NavDropdown title="File" id="basic-nav-dropdown">
                 <NavDropdown.Item href="/new">New</NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item href="/open">Open...</NavDropdown.Item>
-                <NavDropdown.Item href="/export">Export...</NavDropdown.Item>
+                <NavDropdown.Item onSelect={props.onExportRules}>Save...</NavDropdown.Item>
+                <NavDropdown.Item onSelect={props.onImportRules}>Open...</NavDropdown.Item>
               </NavDropdown>
               <NavDropdown title="Sprites" id="basic-nav-dropdown" onSelect={props.onSelect}>
                 <NavDropdown.Item href="/import">Import...</NavDropdown.Item>
