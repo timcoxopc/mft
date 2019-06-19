@@ -64,6 +64,7 @@ class Rule extends React.Component {
   constructor(props) {
     super(props);
     
+    // Is this state needed?
     this.state = { 
         rule: props.rule 
     };

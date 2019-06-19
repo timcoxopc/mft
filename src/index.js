@@ -4,8 +4,7 @@ import MainNavbar from './MainNavbar';
 import ExportModal from './ExportModal';
 import ImportModal from './ImportModal';
 import RuleSet from './RuleSet';
-import SpritePalette from './SpritePalette';
-import Rule from './Rule';
+import Map from './Map';
 import { BrowserRouter as Router } from "react-router-dom";
 import { Route, Switch } from "react-router-dom";
 import './index.css';
@@ -27,8 +26,12 @@ class Muffit extends React.Component {
       emptyRules.push([0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0]);
     }
 
+    let cells = new Array(375).fill(1);
+    //cells.fill(1, 0, 374);
+    console.log(cells);
     this.state = {
       rules: emptyRules,
+      cells: cells,
       modalShow: false,
       spriteSheet: "chicken",
       spriteWidth: 32,
@@ -58,6 +61,14 @@ class Muffit extends React.Component {
     });
   }
 
+  handleMapClick(cell) {
+    const cells = this.state.cells.slice();
+    cells[cell] = this.state.spriteIndex;
+    this.setState({
+      cells: cells
+    });
+  }
+
   openFile(file) {
     console.log("OPEN file ", file);
     this.setState({ modalShow: false });
@@ -76,7 +87,7 @@ class Muffit extends React.Component {
     .then((res) => res.json())
     .then((data) => {
       const rules = this.state.rules.slice();
-      for (let i = 0; i < 40; i++) {
+      for (let i = 0; i < data.length; i++) {
         for(let j = 0; j < rules[i].length; j++) {
           rules[i][j] = data[i][j];
         }
@@ -114,17 +125,45 @@ class Muffit extends React.Component {
             onExportRules={() => this.exportRules()}
             onImportRules={() => this.importRules()}
           />
-
-          <RuleSet 
-            rules={this.state.rules.slice()}
-            spriteIndex={this.state.spriteIndex}
-            spriteSheet={this.state.spriteSheet} 
-            spriteWidth={this.state.spriteWidth} 
-            spriteHeight={this.state.spriteHeight} 
-            spritesPerRow={this.state.spritesPerRow} 
-            onRuleClick={(i, rule, value) => this.handleClick(i, rule, value)} 
-            onSpriteSelect={(e) => this.setSprite(e)}
-          />
+          <Switch>
+            <Route 
+              path="/" exact 
+              render={props => 
+                <RuleSet
+                  {...props}
+                  rules={this.state.rules.slice()}
+                  spriteIndex={this.state.spriteIndex}
+                  spriteSheet={this.state.spriteSheet} 
+                  spriteWidth={this.state.spriteWidth} 
+                  spriteHeight={this.state.spriteHeight} 
+                  spritesPerRow={this.state.spritesPerRow} 
+                  onRuleClick={(i, rule, value) => this.handleClick(i, rule, value)} 
+                  onSpriteSelect={(e) => this.setSprite(e)}
+                />
+              }
+              
+            />
+            <Route 
+              path="/map" exact 
+              render={props => 
+                <Map
+                  {...props}
+                  rules={this.state.rules.slice()}
+                  cells={this.state.cells.slice()}
+                  spriteIndex={this.state.spriteIndex}
+                  spriteSheet={this.state.spriteSheet} 
+                  spriteWidth={this.state.spriteWidth} 
+                  spriteHeight={this.state.spriteHeight} 
+                  spritesPerRow={this.state.spritesPerRow} 
+                  onClick={(cell) => this.handleMapClick(cell)}
+                  onSpriteSelect={(e) => this.setSprite(e)}
+                />
+              }
+              
+            />
+            <Route path="/export" exact component={ExportModal} />
+            <Route path="/open" exact component={ExportModal} />
+          </Switch>
 
           <ImportModal 
             show={this.state.modalShow} 
@@ -136,6 +175,7 @@ class Muffit extends React.Component {
   }
 }
 
+////render={props => <About {...props} extra={someVariable} />} 
 // ========================================
 
 function downloadObjectAsJson(exportObj, exportName){

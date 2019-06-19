@@ -10,6 +10,10 @@ function Cell(props) {
       props.spritesPerRow
       props.outlineStyle
     */
+  function preventDragHandler(e) {
+    e.preventDefault();
+  }
+
     let spriteInnerStyle = {
         width: props.spriteWidth,
         height: props.spriteHeight,
@@ -34,7 +38,15 @@ function Cell(props) {
 
     return (
       <div style={props.style} className={props.className}>
-        <img src = {`${imgsrc}`} alt="cell" style={spriteInnerStyle} className="cell--button" onClick={props.onClick} />
+        <img 
+          src = {`${imgsrc}`} 
+          alt="cell" 
+          style={spriteInnerStyle} 
+          className="cell--button" 
+          onClick={props.onClick}
+          onMouseOver={props.onMouseOver} 
+          onDragStart={preventDragHandler} 
+        />  
       </div>
     );
 }

@@ -154,6 +154,22 @@ ol, ul {
   border: none;
 }
 
+.map-wrapper {
+  margin: 0 0 0 73px;
+  position: relative;
+}
+
 .rules-wrapper {
   padding: 3px 0 0 73px
+}
+
+/* NavBar */
+
+.main-links {
+  margin: 0 auto;
+}
+
+.main-links .nav-link {
+    padding-right: 2rem !important;
+    padding-left: 2rem !important;
 }
