@@ -27,11 +27,10 @@ class Muffit extends React.Component {
     }
 
     let cells = new Array(375).fill(1);
-    //cells.fill(1, 0, 374);
     console.log(cells);
     this.state = {
       rules: emptyRules,
-      cells: cells,
+      mapCells: cells,
       modalShow: false,
       spriteSheet: "chicken",
       spriteWidth: 32,
@@ -62,10 +61,10 @@ class Muffit extends React.Component {
   }
 
   handleMapClick(cell) {
-    const cells = this.state.cells.slice();
+    const cells = this.state.mapCells.slice();
     cells[cell] = this.state.spriteIndex;
     this.setState({
-      cells: cells
+      mapCells: cells
     });
   }
 
@@ -79,22 +78,31 @@ class Muffit extends React.Component {
   }
 
   exportRules() {
-    downloadObjectAsJson(this.state.rules, "test");
+    var saveObj = {};
+    saveObj.rules = this.state.rules.slice();
+    saveObj.map = this.state.mapCells.slice();
+    downloadObjectAsJson(saveObj, "test");
   }
 
   importRules() {
     fetch('./files/test.mft')
     .then((res) => res.json())
     .then((data) => {
+      
+      // Pull in rules - Optimize
       const rules = this.state.rules.slice();
-      for (let i = 0; i < data.length; i++) {
+      for (let i = 0; i < data.rules.length; i++) {
         for(let j = 0; j < rules[i].length; j++) {
-          rules[i][j] = data[i][j];
+          rules[i][j] = data.rules[i][j];
         }
       }
+
+      // Pull in map
+      const mapCells = data.map.slice();
   
       this.setState ({
-        rules: rules
+        rules: rules,
+        mapCells: mapCells
       });
     })
   }
@@ -149,7 +157,7 @@ class Muffit extends React.Component {
                 <Map
                   {...props}
                   rules={this.state.rules.slice()}
-                  cells={this.state.cells.slice()}
+                  cells={this.state.mapCells.slice()}
                   spriteIndex={this.state.spriteIndex}
                   spriteSheet={this.state.spriteSheet} 
                   spriteWidth={this.state.spriteWidth} 
