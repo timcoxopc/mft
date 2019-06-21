@@ -16,6 +16,7 @@ function MainNavbar(props) {
                 <NavDropdown.Divider />
                 <NavDropdown.Item onSelect={props.onExportRules}>Save...</NavDropdown.Item>
                 <NavDropdown.Item onSelect={props.onImportRules}>Open...</NavDropdown.Item>
+                <NavDropdown.Item onSelect={props.onCompile}>Compile</NavDropdown.Item>
               </NavDropdown>
               <NavDropdown title="Sprites" onSelect={props.onSelect}>
                 <NavDropdown.Item href="/import">Import...</NavDropdown.Item>

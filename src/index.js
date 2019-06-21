@@ -5,6 +5,7 @@ import ExportModal from './ExportModal';
 import ImportModal from './ImportModal';
 import RuleSet from './RuleSet';
 import Map from './Map';
+import Play from './Play';
 import { BrowserRouter as Router } from "react-router-dom";
 import { Route, Switch } from "react-router-dom";
 import './index.css';
@@ -27,9 +28,10 @@ class Muffit extends React.Component {
     }
 
     let cells = new Array(375).fill(1);
-    console.log(cells);
+
     this.state = {
       rules: emptyRules,
+      convertedRules: {},
       mapCells: cells,
       modalShow: false,
       spriteSheet: "chicken",
@@ -63,6 +65,14 @@ class Muffit extends React.Component {
   handleMapClick(cell) {
     const cells = this.state.mapCells.slice();
     cells[cell] = this.state.spriteIndex;
+    this.setState({
+      mapCells: cells
+    });
+  }
+
+  handleUpdate(cell, value){
+    const cells = this.state.mapCells.slice();
+    cells[cell] = value;
     this.setState({
       mapCells: cells
     });
@@ -107,6 +117,12 @@ class Muffit extends React.Component {
     })
   }
 
+  compile() {
+    this.setState(function(currentState){
+      return {convertedRules:convertRules(currentState.rules)}
+    });
+  }
+
   selectSpriteSheet(value) {
     if(value !== "chicken") {
       this.setState({
@@ -132,6 +148,7 @@ class Muffit extends React.Component {
             onSelect={(e) => this.selectSpriteSheet(e)} 
             onExportRules={() => this.exportRules()}
             onImportRules={() => this.importRules()}
+            onCompile={() => this.compile()}
           />
           <Switch>
             <Route 
@@ -156,7 +173,7 @@ class Muffit extends React.Component {
               render={props => 
                 <Map
                   {...props}
-                  rules={this.state.rules.slice()}
+                  rules={this.state.rules}
                   cells={this.state.mapCells.slice()}
                   spriteIndex={this.state.spriteIndex}
                   spriteSheet={this.state.spriteSheet} 
@@ -167,7 +184,22 @@ class Muffit extends React.Component {
                   onSpriteSelect={(e) => this.setSprite(e)}
                 />
               }
-              
+            />
+            <Route 
+              path="/play" exact 
+              render={props => 
+                <Play
+                  {...props}
+                  rules={this.state.convertedRules}
+                  cells={this.state.mapCells.slice()}
+                  spriteIndex={this.state.spriteIndex}
+                  spriteSheet={this.state.spriteSheet} 
+                  spriteWidth={this.state.spriteWidth} 
+                  spriteHeight={this.state.spriteHeight} 
+                  spritesPerRow={this.state.spritesPerRow}
+                  onUpdate={(cell, value) => this.handleUpdate(cell, value)}
+                />
+              }
             />
             <Route path="/export" exact component={ExportModal} />
             <Route path="/open" exact component={ExportModal} />
@@ -183,7 +215,8 @@ class Muffit extends React.Component {
   }
 }
 
-////render={props => <About {...props} extra={someVariable} />} 
+// ========================================
+// Move into helper functions import
 // ========================================
 
 function downloadObjectAsJson(exportObj, exportName){
@@ -194,6 +227,58 @@ function downloadObjectAsJson(exportObj, exportName){
   document.body.appendChild(downloadAnchorNode); // required for firefox
   downloadAnchorNode.click();
   downloadAnchorNode.remove();
+}
+
+function gc(char) {
+    return String.fromCharCode(97 + char);
+}
+
+function getWildCardRules(str) {
+    let arrayRules = [""];
+    let ruleIndex = 0;
+    let maxCellStates = 16;
+
+    for(let i = 0; i < str.length; i++) {
+        let c = str.charAt(i);								
+        if(c !== "a") {			
+            if(arrayRules[ruleIndex] !== undefined) {
+                arrayRules[ruleIndex] += c;
+            }
+        }		
+        else {
+            let preString = arrayRules[ruleIndex];
+            if(preString !== undefined) {					
+                for(let j = 0; j <= (maxCellStates - 1); j++) {			
+                    if(j !== 0) {													
+                        let rString = gc(j) + str.slice(i + 1 , str.length);																																	
+                        arrayRules[ruleIndex] = getWildCardRules(preString + rString);
+                        ruleIndex++;	
+                    }
+                }
+            }
+        }				
+    }
+    return arrayRules.slice();
+}
+
+function convertRules(rules) {
+  const newRules = {};
+  for(let rule of rules) {        
+      let newRule = "";
+      for(let i = 2; i <= 6; i++) {
+          newRule += gc(rule[i]); 
+      }
+      let allRules;
+      if(newRule !== "aaaaa") {
+          allRules = getWildCardRules(newRule).toString().split(",");
+      } 
+      if(allRules){
+        for(newRule of allRules) {
+          newRules[newRule] = rule[7];
+        }
+      }
+  }
+  return newRules;
 }
 
 // ========================================
