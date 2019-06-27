@@ -1,32 +1,50 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Cell from './Cell';
+import KeyTrigger from './KeyTrigger';
 
 function Play(props) {
 
     const [cells, setCells] = useState(props.cells.slice());
-    console.log("props.rules", props.rules);
+    let cellsRef = useRef(props.cells.slice);
+    //let currentCells = usePrevious(props.cells);
     // HOC of Map or asbtract map to Grid?
-    
-    const timerID = setInterval(updateCells, 800); 
+    useInterval(() => {
+        updateCells(12);
+    }, 300);
+    useInterval(() => {
+        updateCells(13);
+    }, 500);
 
+    useEffect(
+        () => { 
+            cellsRef.current = cells 
+        },
+        [cells]
+      );
+    /*
+   function usePrevious(value) {
+    const ref = useRef();
     useEffect(() => {
-        return () => {
-            if(timerID) {    
-                clearInterval(timerID);
-            }
-        }
-    }, [timerID]);
+      ref.current = value;
+    });
+    return ref.current;
+  }
+  */
 
-    function updateCells() {
-        let newCells = cells.slice()
-        for(i = 0; i < cells.length; i++) {
-            //console.log(convertedRules);
-            let ruleIndex = gc(cells[i - 25]) + gc(cells[i - 1]) + gc(cells[i]) + gc(cells[i + 1]) + gc(cells[i + 25])
+   function updateCells(trigger) {
+    if(trigger < 10){
+        console.log("trigger", trigger);
+    }
+    let newCells =  cellsRef.current.slice();
+        for(let i = 0; i < newCells.length; i++) {
+            let ruleIndex = gc(trigger) + gc(cells[i - 25]) + gc(cells[i - 1]) + gc(cells[i]) + gc(cells[i + 1]) + gc(cells[i + 25])
             if(props.rules[ruleIndex]) {
                 newCells[i] = props.rules[ruleIndex];
             }
         }
         setCells(newCells);
+        //console.log("A", cells);
+        //console.log("B", cellsRef.current);
     }
 
     function renderMapCell(i, x, y) {
@@ -67,13 +85,55 @@ function Play(props) {
             i++;  
         }    
     }
+
+    function useInterval(callback, delay) {
+        const savedCallback = useRef();
+      
+        // Remember the latest function.
+        useEffect(() => {
+          savedCallback.current = callback;
+        }, [callback]);
+      
+        // Set up the interval.
+        useEffect(() => {
+          function tick() {
+            savedCallback.current();
+          }
+          if (delay !== null) {
+            let id = setInterval(tick, delay);
+            return () => clearInterval(id);
+          }
+        }, [delay]);
+      }
     
     return (
         <div className="play-wrapper">
-            {cellsGrid}
+            <div className="grid-wrapper">
+                {cellsGrid}
+            </div>
+            <div className="keys-wrapper">
+                <KeyTrigger style={{margin: "10px"}} keyCode={37} label="Left" onTrigger={() => updateCells(1)} />
+                <KeyTrigger style={{margin: "10px"}} keyCode={38} label="Up" onTrigger={() => updateCells(2)} />
+                <KeyTrigger style={{margin: "10px"}} keyCode={39} label="Right" onTrigger={() => updateCells(3)} />
+                <KeyTrigger style={{margin: "10px"}} keyCode={40} label="Down" onTrigger={() => updateCells(4)} />
+            </div>
         </div>
     );
 }
+
+/*
+            <TriggerTimer 
+                triggerID="13"
+                delay = "500"
+                onUpdate = {(trigger) => updateCells(trigger)}
+            />
+            <TriggerTimer 
+                triggerID="14"
+                delay = "2000"
+                onUpdate = {(trigger2) => updateCells(trigger2)}
+            />
+            */
+
 
 function gc(char) {
     return String.fromCharCode(97 + char);

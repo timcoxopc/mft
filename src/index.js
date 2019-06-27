@@ -265,6 +265,7 @@ function convertRules(rules) {
   const newRules = {};
   for(let rule of rules) {        
       let newRule = "";
+      //let newRule = String(gc(rule[1]));
       for(let i = 2; i <= 6; i++) {
           newRule += gc(rule[i]); 
       }
@@ -272,11 +273,13 @@ function convertRules(rules) {
       if(newRule !== "aaaaa") {
           allRules = getWildCardRules(newRule).toString().split(",");
       } 
+      
       if(allRules){
         for(newRule of allRules) {
-          newRules[newRule] = rule[7];
+          newRules[gc(rule[0]) + newRule] = rule[7];
         }
       }
+      //console.log(gc(rule[0]));
   }
   return newRules;
 }

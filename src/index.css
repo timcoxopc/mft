@@ -8,6 +8,16 @@ ol, ul {
   padding-left: 30px;
 }
 
+.grid-wrapper {
+  position: absolute;
+}
+
+.keys-wrapper {
+   position: relative;
+    top: 490px;
+    width: 100%;
+}
+
 .board-row:after {
   clear: both;
   content: "";
