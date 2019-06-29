@@ -6,9 +6,12 @@ import ImportModal from './ImportModal';
 import RuleSet from './RuleSet';
 import Map from './Map';
 import Play from './Play';
+//import FileSelector from './FileSelector';
 import { BrowserRouter as Router } from "react-router-dom";
 import { Route, Switch } from "react-router-dom";
 import './index.css';
+
+const images = require.context('../public/img', true); // For hidden spritesheet
 
 const TRIGGER1 = 0;
 //const TRIGGER2 = 1;
@@ -34,11 +37,12 @@ class Muffit extends React.Component {
       convertedRules: {},
       mapCells: cells,
       modalShow: false,
-      spriteSheet: "chicken",
+      spriteSheet: "chicken.png",
       spriteWidth: 32,
       spriteHeight: 32,
       spritesPerRow: 8,
-      spriteIndex: 1  
+      spriteIndex: 1,  
+      programState:"uncompiled"
     }
   }
   
@@ -58,7 +62,8 @@ class Muffit extends React.Component {
       }
     }
     this.setState({
-      rules: rules
+      rules: rules,
+      programState: "uncompiled"
     });
   }
 
@@ -89,32 +94,35 @@ class Muffit extends React.Component {
 
   exportRules() {
     var saveObj = {};
+    //console.log(getImageData("sprite-sheet"));
     saveObj.rules = this.state.rules.slice();
     saveObj.map = this.state.mapCells.slice();
+    saveObj.spriteSheet = this.state.spriteSheet; //getImageData("sprite-sheet")
     downloadObjectAsJson(saveObj, "test");
   }
 
-  importRules() {
-    fetch('./files/test.mft')
-    .then((res) => res.json())
-    .then((data) => {
-      
-      // Pull in rules - Optimize
-      const rules = this.state.rules.slice();
-      for (let i = 0; i < data.rules.length; i++) {
-        for(let j = 0; j < rules[i].length; j++) {
-          rules[i][j] = data.rules[i][j];
-        }
-      }
-
-      // Pull in map
-      const mapCells = data.map.slice();
-  
-      this.setState ({
-        rules: rules,
-        mapCells: mapCells
+  handleCompileButton() {
+    if(this.state.programState === "uncompiled") {
+      this.setState({
+        programState:"compiling"
       });
-    })
+      this.setState(function(currentState){
+        return {
+          convertedRules:convertRules(currentState.rules),
+          programState:"playing"
+        }
+      });
+    }
+    else if(this.state.programState === "compiled") {
+      this.setState({
+        programState:"playing"
+      });
+    }
+    else if(this.state.programState === "playing") {
+      this.setState({
+        programState:"compiled"
+      });
+    }
   }
 
   compile() {
@@ -124,7 +132,7 @@ class Muffit extends React.Component {
   }
 
   selectSpriteSheet(value) {
-    if(value !== "chicken") {
+    if(value !== "chicken.png") {
       this.setState({
         spriteWidth: 16,
         spriteHeight: 16
@@ -138,9 +146,36 @@ class Muffit extends React.Component {
     this.setState({ spriteSheet: value });
   }
 
+  handleFileLoaded(str) {
+          let data = JSON.parse(str);
+          const rules = this.state.rules.slice();
+          for (let i = 0; i < data.rules.length; i++) {
+            for(let j = 0; j < rules[i].length; j++) {
+              rules[i][j] = data.rules[i][j];
+            }
+          }
+          
+          let spriteSheet;
+          if(data.spriteSheet) {
+            spriteSheet = data.spriteSheet;
+          }
+          else {
+            spriteSheet = "chicken.png";
+          }
+
+          this.selectSpriteSheet(spriteSheet);
+
+          this.setState ({
+            rules: rules,
+            mapCells: data.map.slice()
+            //spriteSheet: spriteSheet.slice()
+          });
+  }
+
   render() {
 
     let modalClose = () => this.setState({ modalShow: false });
+    let imgsrc = images(`./${this.state.spriteSheet}`);
 
     return (
         <div>
@@ -148,8 +183,12 @@ class Muffit extends React.Component {
             onSelect={(e) => this.selectSpriteSheet(e)} 
             onExportRules={() => this.exportRules()}
             onImportRules={() => this.importRules()}
+            onFileLoaded={(e) => this.handleFileLoaded(e)}
             onCompile={() => this.compile()}
+            onPlay={() => this.handleCompileButton()}
+            programState={this.state.programState}
           />
+          
           <Switch>
             <Route 
               path="/" exact 
@@ -197,6 +236,7 @@ class Muffit extends React.Component {
                   spriteWidth={this.state.spriteWidth} 
                   spriteHeight={this.state.spriteHeight} 
                   spritesPerRow={this.state.spritesPerRow}
+                  programState={this.state.programState}
                   onUpdate={(cell, value) => this.handleUpdate(cell, value)}
                 />
               }
@@ -210,6 +250,11 @@ class Muffit extends React.Component {
             onHide={modalClose} 
             openfile={(file) => this.openFile(file)} 
           />
+          <img
+            alt="sprite sheet" 
+            id="sprite-sheet"
+            src = {`${imgsrc}`}
+          />          
         </div>
     );
   }
@@ -248,7 +293,7 @@ function getWildCardRules(str) {
         else {
             let preString = arrayRules[ruleIndex];
             if(preString !== undefined) {					
-                for(let j = 0; j <= (maxCellStates - 1); j++) {			
+                for(let j = 0; j <= maxCellStates; j++) {			
                     if(j !== 0) {													
                         let rString = gc(j) + str.slice(i + 1 , str.length);																																	
                         arrayRules[ruleIndex] = getWildCardRules(preString + rString);
@@ -283,6 +328,16 @@ function convertRules(rules) {
   }
   return newRules;
 }
+
+/*
+function getImageData(imageID){
+  var canvas = document.createElement('canvas');
+  var context = canvas.getContext('2d');
+  var img = document.getElementById(imageID);
+  context.drawImage(img, 0, 0 );
+  return context.getImageData(0, 0, img.width, img.height);
+}
+*/
 
 // ========================================
 

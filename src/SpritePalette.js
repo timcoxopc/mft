@@ -58,7 +58,7 @@ class SpritePalette extends React.Component {
 
     return(
       <Cell 
-        spriteSheet="no-fill"
+        spriteSheet="no-fill.png"
         spriteWidth={32}
         spriteHeight={32}
         spritesPerRow={1}

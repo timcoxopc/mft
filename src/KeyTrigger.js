@@ -6,6 +6,7 @@ function KeyTrigger(props) {
     const handleKeyDown = (e) => {
         if(e.keyCode === props.keyCode){
             props.onTrigger(2);
+            e.preventDefault();
         }
     };
 
@@ -16,7 +17,7 @@ function KeyTrigger(props) {
         };
     });
 
-    return <Button style={props.style}>{props.label}</Button>
+    return <Button onClick={() => props.onTrigger(2)} style={props.style}>{props.label}</Button>
 }
 
 export default KeyTrigger

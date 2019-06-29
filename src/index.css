@@ -8,6 +8,24 @@ ol, ul {
   padding-left: 30px;
 }
 
+.play-button {
+  margin-left: 30px;
+}
+
+#sprite-sheet {
+  display:none; /* ?unhide for saving embedded images */
+}
+
+.grid-wrapper,
+.map-wrapper,
+.cell--button {
+  image-rendering: pixelated;
+}
+
+.nav-button {
+  width: 80px;
+}
+
 .grid-wrapper {
   position: absolute;
 }

@@ -8,12 +8,14 @@ function Play(props) {
     let cellsRef = useRef(props.cells.slice);
     //let currentCells = usePrevious(props.cells);
     // HOC of Map or asbtract map to Grid?
-    useInterval(() => {
-        updateCells(12);
-    }, 300);
+    /*
     useInterval(() => {
         updateCells(13);
-    }, 500);
+    }, 300);
+    */
+    useInterval(() => {
+        updateCells(12);
+    }, 400);
 
     useEffect(
         () => { 
@@ -32,19 +34,22 @@ function Play(props) {
   */
 
    function updateCells(trigger) {
-    if(trigger < 10){
-        console.log("trigger", trigger);
+    if(props.programState !== "playing") {
+        return;
     }
-    let newCells =  cellsRef.current.slice();
-        for(let i = 0; i < newCells.length; i++) {
-            let ruleIndex = gc(trigger) + gc(cells[i - 25]) + gc(cells[i - 1]) + gc(cells[i]) + gc(cells[i + 1]) + gc(cells[i + 25])
+    //if(trigger < 10){
+    //console.log("TRIGGER", trigger);
+    //}
+    let oldCells = cellsRef.current.slice();
+    let newCells = cellsRef.current.slice();
+        for(let i = 0; i < oldCells.length; i++) {
+            let ruleIndex = gc(trigger) + gc(oldCells[i - 25]) + gc(oldCells[i - 1]) + gc(oldCells[i]) + gc(oldCells[i + 1]) + gc(oldCells[i + 25])
             if(props.rules[ruleIndex]) {
                 newCells[i] = props.rules[ruleIndex];
             }
         }
+        cellsRef.current = newCells.slice();
         setCells(newCells);
-        //console.log("A", cells);
-        //console.log("B", cellsRef.current);
     }
 
     function renderMapCell(i, x, y) {
@@ -56,8 +61,8 @@ function Play(props) {
             transform: "scale(" + 32 / props.spriteWidth + ")",
             transformOrigin: "top left",
             position: "absolute",
-            left: x * props.spriteWidth,
-            top: y * props.spriteHeight,
+            left: x * 32, //props.spriteWidth,
+            top: y * 32 //props.spriteHeight,
         }
 
         return(
@@ -106,8 +111,11 @@ function Play(props) {
         }, [delay]);
       }
     
+      let stageWidth = gridWidth * 32;//props.spriteWidth;
+
     return (
-        <div className="play-wrapper">
+        
+        <div className="play-wrapper" style={{width:stageWidth, margin:"0 auto"}}>
             <div className="grid-wrapper">
                 {cellsGrid}
             </div>
@@ -136,7 +144,11 @@ function Play(props) {
 
 
 function gc(char) {
-    return String.fromCharCode(97 + char);
+    if(char === undefined){
+        return "b";
+    } else{
+        return String.fromCharCode(97 + char);
+    }
 }
 
 export default Play;

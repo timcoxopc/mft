@@ -24,7 +24,7 @@ function Cell(props) {
     let imgsrc = "./img/blank.png";
     let position = "";
     if(props.value !== 0) {
-      imgsrc = images(`./${props.spriteSheet}.png`);
+      imgsrc = images(`./${props.spriteSheet}`);
       let offsetY = "0";
       if(props.value > props.spritesPerRow){
         offsetY = props.spriteHeight * (Math.floor((props.value - 1)  / props.spritesPerRow)) * -1 + "px"

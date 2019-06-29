@@ -29,8 +29,8 @@ function Map(props) {
             transform: "scale(" + 32 / props.spriteWidth + ")",
             transformOrigin: "top left",
             position: "absolute",
-            left: x * props.spriteWidth,
-            top: y * props.spriteHeight,
+            left: x * 32,//props.spriteWidth,
+            top: y * 32//props.spriteHeight,
         }
 
         return(

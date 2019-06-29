@@ -15,9 +15,8 @@ import trigger7 from './img/triggers/button2.png';
 import trigger8 from './img/triggers/1-2-random.png';
 import trigger9 from './img/triggers/2-2-random.png';
 import trigger10 from './img/triggers/step1.png';
-import trigger11 from './img/triggers/timer1.png';
-import trigger12 from './img/triggers/timer2.png';
-import trigger13 from './img/triggers/timer1.png';
+import trigger12 from './img/triggers/timer1.png';
+import trigger13 from './img/triggers/timer2.png';
 import trigger14 from './img/triggers/loop.png';
 import trigger15 from './img/triggers/loop1.png';
 import trigger16 from './img/triggers/1-4-random.png';
@@ -108,7 +107,7 @@ class Rule extends React.Component {
       <Cell
         key={i}
         value = {i} 
-        spriteSheet = "specials"
+        spriteSheet = "specials.png"
         spriteWidth = {181} 
         spriteHeight = {67} 
         spritesPerRow = {3}
@@ -154,7 +153,6 @@ class Rule extends React.Component {
           <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 8)} style={imgStyle} src={trigger8} /></button>
           <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 9)} style={imgStyle} src={trigger9} /></button>
           <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 10)} style={imgStyle} src={trigger10} /></button>
-          <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 11)} style={imgStyle} src={trigger11} /></button>
           <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 12)} style={imgStyle} src={trigger12} /></button>
           <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 13)} style={imgStyle} src={trigger13} /></button>
           <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 14)} style={imgStyle} src={trigger14} /></button>
@@ -164,7 +162,7 @@ class Rule extends React.Component {
           <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 18)} style={imgStyle} src={trigger18} /></button>
           <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 19)} style={imgStyle} src={trigger19} /></button>
           <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 20)} style={imgStyle} src={trigger20} /></button>
-          <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 21)} style={imgStyle} src={trigger21} /></button>
+          <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 22)} style={imgStyle} src={trigger21} /></button>
           <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 22)} style={imgStyle} src={trigger22} /></button>
           <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 23)} style={imgStyle} src={trigger23} /></button>
           <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 24)} style={imgStyle} src={trigger24} /></button>
@@ -222,7 +220,7 @@ class Rule extends React.Component {
             <Cell
               ref={this.attachRef}
               value = {this.state.rule[SPECIAL1]} 
-              spriteSheet = "specials"
+              spriteSheet = "specials.png"
               spriteWidth = {181} 
               spriteHeight = {67} 
               spritesPerRow = {3}
