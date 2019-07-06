@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import MainNavbar from './MainNavbar';
 import ExportModal from './ExportModal';
 import ImportModal from './ImportModal';
+import SettingsModal from './SettingsModal';
 import RuleSet from './RuleSet';
 import Map from './Map';
 import Play from './Play';
@@ -37,12 +38,19 @@ class Muffit extends React.Component {
       convertedRules: {},
       mapCells: cells,
       modalShow: false,
+      settingsModalShow: false,
       spriteSheet: "chicken.png",
       spriteWidth: 32,
       spriteHeight: 32,
       spritesPerRow: 8,
       spriteIndex: 1,  
-      programState:"uncompiled"
+      programState:"uncompiled",
+      cellswide: 25,
+      cellshigh: 15,
+      cellwidth: 32,
+      cellheight: 32,
+      timer1: 400,
+      timer2: 800,
     }
   }
   
@@ -83,6 +91,15 @@ class Muffit extends React.Component {
     });
   }
 
+  handleUpdateSettings(prop, value){
+    console.log("update", prop, " with ", value);
+    //const cells = this.state.mapCells.slice();
+    this.setState({
+      [prop]: value
+    });
+    
+  }
+
   openFile(file) {
     console.log("OPEN file ", file);
     this.setState({ modalShow: false });
@@ -119,9 +136,20 @@ class Muffit extends React.Component {
       });
     }
     else if(this.state.programState === "playing") {
+      const cells = this.state.mapCells.slice();
       this.setState({
-        programState:"compiled"
+        programState:"compiled",
+        mapCells: cells,
+        spriteHeight: 32
       });
+      /*
+      this.setState(function(currentState){
+        return {
+            mapCells:currentState.mapCells.slice(),
+            programState:"compiled"
+          }
+      });
+      */
     }
   }
 
@@ -172,10 +200,16 @@ class Muffit extends React.Component {
           });
   }
 
+  handleOpenSettings() {
+    this.setState({ settingsModalShow: true });
+  }
+
   render() {
 
     let modalClose = () => this.setState({ modalShow: false });
+    let settingsModalClose = () => this.setState({ settingsModalShow: false });
     let imgsrc = images(`./${this.state.spriteSheet}`);
+    console.log("43:", this.state.mapCells[43]);
 
     return (
         <div>
@@ -184,6 +218,7 @@ class Muffit extends React.Component {
             onExportRules={() => this.exportRules()}
             onImportRules={() => this.importRules()}
             onFileLoaded={(e) => this.handleFileLoaded(e)}
+            onOpenSettings={() => this.handleOpenSettings()}
             onCompile={() => this.compile()}
             onPlay={() => this.handleCompileButton()}
             programState={this.state.programState}
@@ -214,6 +249,10 @@ class Muffit extends React.Component {
                   {...props}
                   rules={this.state.rules}
                   cells={this.state.mapCells.slice()}
+                  cellsWide={this.state.cellswide}
+                  cellsHigh={this.state.cellshigh}
+                  cellWidth={this.state.cellwidth}
+                  cellHeight={this.state.cellheight}
                   spriteIndex={this.state.spriteIndex}
                   spriteSheet={this.state.spriteSheet} 
                   spriteWidth={this.state.spriteWidth} 
@@ -231,6 +270,10 @@ class Muffit extends React.Component {
                   {...props}
                   rules={this.state.convertedRules}
                   cells={this.state.mapCells.slice()}
+                  cellsWide={this.state.cellswide}
+                  cellsHigh={this.state.cellshigh}
+                  cellWidth={this.state.cellwidth}
+                  cellHeight={this.state.cellheight}
                   spriteIndex={this.state.spriteIndex}
                   spriteSheet={this.state.spriteSheet} 
                   spriteWidth={this.state.spriteWidth} 
@@ -249,6 +292,18 @@ class Muffit extends React.Component {
             show={this.state.modalShow} 
             onHide={modalClose} 
             openfile={(file) => this.openFile(file)} 
+          />
+          
+          <SettingsModal
+            show={this.state.settingsModalShow} 
+            onHide={() => settingsModalClose()} 
+            handleUpdateSettings={(prop, val) => this.handleUpdateSettings(prop, val)}
+            cellswide = {this.state.cellswide}
+            cellshigh = {this.state.cellshigh}
+            cellwidth = {this.state.cellwidth}
+            cellheight = {this.state.cellheight}
+            timer1 = {this.state.timer1}
+            timer2 = {this.state.timer2}
           />
           <img
             alt="sprite sheet" 

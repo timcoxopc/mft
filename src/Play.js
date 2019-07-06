@@ -3,52 +3,36 @@ import Cell from './Cell';
 import KeyTrigger from './KeyTrigger';
 
 function Play(props) {
-
     const [cells, setCells] = useState(props.cells.slice());
     let cellsRef = useRef(props.cells.slice);
-    //let currentCells = usePrevious(props.cells);
-    // HOC of Map or asbtract map to Grid?
-    /*
-    useInterval(() => {
-        updateCells(13);
-    }, 300);
-    */
+
     useInterval(() => {
         updateCells(12);
     }, 400);
 
     useEffect(
         () => { 
-            cellsRef.current = cells 
+            cellsRef.current.cells = cells 
         },
         [cells]
       );
-    /*
-   function usePrevious(value) {
-    const ref = useRef();
-    useEffect(() => {
-      ref.current = value;
-    });
-    return ref.current;
-  }
-  */
 
    function updateCells(trigger) {
     if(props.programState !== "playing") {
         return;
     }
     //if(trigger < 10){
-    //console.log("TRIGGER", trigger);
+    console.log("TRIGGER", props.cellsWide);
     //}
-    let oldCells = cellsRef.current.slice();
-    let newCells = cellsRef.current.slice();
+    let oldCells = cellsRef.current.cells.slice();
+    let newCells = cellsRef.current.cells.slice();
         for(let i = 0; i < oldCells.length; i++) {
-            let ruleIndex = gc(trigger) + gc(oldCells[i - 25]) + gc(oldCells[i - 1]) + gc(oldCells[i]) + gc(oldCells[i + 1]) + gc(oldCells[i + 25])
+            let ruleIndex = gc(trigger) + gc(oldCells[i - props.cellsWide]) + gc(oldCells[i - 1]) + gc(oldCells[i]) + gc(oldCells[i + 1]) + gc(oldCells[i + props.cellsWide])
             if(props.rules[ruleIndex]) {
                 newCells[i] = props.rules[ruleIndex];
             }
         }
-        cellsRef.current = newCells.slice();
+        cellsRef.current.cells = newCells.slice();
         setCells(newCells);
     }
 
@@ -56,13 +40,13 @@ function Play(props) {
         
         let spriteCellStyle = {
             float: "left",
-            width: "32px",
-            height: "32px",
-            transform: "scale(" + 32 / props.spriteWidth + ")",
+            width: props.cellWidth,
+            height: props.cellHeight,
+            transform: "scale(" + props.cellWidth / props.spriteWidth + ")",
             transformOrigin: "top left",
             position: "absolute",
-            left: x * 32, //props.spriteWidth,
-            top: y * 32 //props.spriteHeight,
+            left: x * props.cellWidth,
+            top: y * props.cellWidth
         }
 
         return(
@@ -79,8 +63,9 @@ function Play(props) {
         );
     }
 
-    const gridWidth = 25;
-    const gridHeight = 15;
+    // Componentify
+    const gridWidth = props.cellsWide;
+    const gridHeight = props.cellsHigh;
         
     let cellsGrid = [];
     let i = 0;
@@ -111,11 +96,11 @@ function Play(props) {
         }, [delay]);
       }
     
-      let stageWidth = gridWidth * 32;//props.spriteWidth;
+      let stageWidth = gridWidth * props.cellWidth;
 
     return (
         
-        <div className="play-wrapper" style={{width:stageWidth, margin:"0 auto"}}>
+        <div className="play-wrapper" style={{width:stageWidth,minWidth:320, margin:"0 auto"}}>
             <div className="grid-wrapper">
                 {cellsGrid}
             </div>
@@ -124,6 +109,8 @@ function Play(props) {
                 <KeyTrigger style={{margin: "10px"}} keyCode={38} label="Up" onTrigger={() => updateCells(2)} />
                 <KeyTrigger style={{margin: "10px"}} keyCode={39} label="Right" onTrigger={() => updateCells(3)} />
                 <KeyTrigger style={{margin: "10px"}} keyCode={40} label="Down" onTrigger={() => updateCells(4)} />
+                <KeyTrigger style={{margin: "10px"}} keyCode={90} label="z" onTrigger={() => updateCells(6)} />
+                <KeyTrigger style={{margin: "10px"}} keyCode={88} label="x" onTrigger={() => updateCells(7)} />
             </div>
         </div>
     );

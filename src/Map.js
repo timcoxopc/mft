@@ -29,8 +29,8 @@ function Map(props) {
             transform: "scale(" + 32 / props.spriteWidth + ")",
             transformOrigin: "top left",
             position: "absolute",
-            left: x * 32,//props.spriteWidth,
-            top: y * 32//props.spriteHeight,
+            left: x * props.cellWidth,
+            top: y * props.cellHeight,
         }
 
         return(
@@ -49,8 +49,8 @@ function Map(props) {
         );
     }
 
-    const gridWidth = 25;
-    const gridHeight = 15;
+    const gridWidth = props.cellsWide;
+    const gridHeight = props.cellsHigh;
         
     let cells = [];
     let i = 0;
@@ -60,7 +60,9 @@ function Map(props) {
             i++;  
         }    
     }
-    
+
+    let stageWidth = gridWidth * props.cellWidth;
+
     return (
         <div>
             <SpritePalette 
@@ -71,7 +73,7 @@ function Map(props) {
                 spritesPerRow={props.spritesPerRow} 
                 onClick={props.onSpriteSelect} 
             />
-            <div onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} className="map-wrapper">
+            <div onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} className="map-wrapper" style={{width:stageWidth,minWidth:320, margin:"0 auto"}}>
                 {cells}
             </div>
         </div>

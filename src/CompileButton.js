@@ -12,7 +12,7 @@ function CompileButton(props) {
         return <Button onClick={props.handlePlay} variant="success" className="play-button">Play</Button>
     }
     else if(props.programState === "playing"){
-        return <Button onClick={props.handlePlay} variant="danger" className="play-button">Stop</Button>
+        return <Button onClick={props.handlePlay} variant="danger" className="play-button">Restart</Button>
     }
     return null;
 }

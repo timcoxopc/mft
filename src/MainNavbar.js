@@ -32,6 +32,7 @@ function MainNavbar(props) {
                 <NavDropdown.Item eventKey="bomber.png">Bomber</NavDropdown.Item>
                 <NavDropdown.Item eventKey="snake.png">Snake</NavDropdown.Item>
               </NavDropdown>
+              <Nav.Link onClick={props.onOpenSettings}>Settings</Nav.Link>
               </Nav>
               <Nav className="main-links">
                 <ButtonGroup>

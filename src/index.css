@@ -1,5 +1,5 @@
 body {
-  background: #eee;
+  background: #666 /* #eee */;
   font: 14px "Century Gothic", Futura, sans-serif;
   margin: 60px 20px 20px 20px;
 }
@@ -198,6 +198,18 @@ ol, ul {
 }
 
 .main-links .nav-link {
-    padding-right: 2rem !important;
-    padding-left: 2rem !important;
+  padding-right: 2rem !important;
+  padding-left: 2rem !important;
+}
+
+.settings-modal .modal-body {
+  padding: 0 1rem 1rem 2rem;
+}
+
+.settings-modal h5 {
+  margin: 20px 0 10px 0;
+}
+
+.form-label {
+  margin-top: .5rem;
 }
