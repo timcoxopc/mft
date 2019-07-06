@@ -376,7 +376,7 @@ function convertRules(rules) {
       
       if(allRules){
         for(newRule of allRules) {
-          newRules[gc(rule[0]) + newRule] = rule[7];
+          newRules[gc(rule[0]) + newRule] = {output: rule[7], special1: rule[8]};
         }
       }
       //console.log(gc(rule[0]));

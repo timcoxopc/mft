@@ -22,14 +22,15 @@ function Play(props) {
         return;
     }
     //if(trigger < 10){
-    console.log("TRIGGER", props.cellsWide);
+    //console.log("TRIGGER", props.cellsWide);
     //}
     let oldCells = cellsRef.current.cells.slice();
     let newCells = cellsRef.current.cells.slice();
         for(let i = 0; i < oldCells.length; i++) {
             let ruleIndex = gc(trigger) + gc(oldCells[i - props.cellsWide]) + gc(oldCells[i - 1]) + gc(oldCells[i]) + gc(oldCells[i + 1]) + gc(oldCells[i + props.cellsWide])
             if(props.rules[ruleIndex]) {
-                newCells[i] = props.rules[ruleIndex];
+                newCells[i] = props.rules[ruleIndex].output;
+                triggerSpecial(props.rules[ruleIndex].special1);
             }
         }
         cellsRef.current.cells = newCells.slice();
@@ -137,5 +138,9 @@ function gc(char) {
         return String.fromCharCode(97 + char);
     }
 }
+
+function triggerSpecial(special) {
+    console.log("Trigger", special);
+} 
 
 export default Play;

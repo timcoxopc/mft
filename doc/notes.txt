@@ -1,7 +1,10 @@
 
 Add more rules button
 Get specials working (or sounds as least)
-
+Option to cancel specials and triggers
+Clear / resize array when stage size changes
+Save / Restore Stage size
+Arrow working
 
 ---------------------------------------------------------------------------------
 Add Bootstrap form elements to Export window
