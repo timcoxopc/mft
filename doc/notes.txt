@@ -1,4 +1,9 @@
 
+Add more rules button
+Get specials working (or sounds as least)
+
+
+---------------------------------------------------------------------------------
 Add Bootstrap form elements to Export window
 Pass down Rules as props to Export window and use to call export json function 
 Add loadwindow (will require refactor up a level to EditRules?) No EditWindow Just chooses file and then RuleSet loads it 

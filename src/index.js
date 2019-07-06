@@ -95,7 +95,7 @@ class Muffit extends React.Component {
     console.log("update", prop, " with ", value);
     //const cells = this.state.mapCells.slice();
     this.setState({
-      [prop]: value
+      [prop]: Number(value)
     });
     
   }
