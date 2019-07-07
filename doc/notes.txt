@@ -1,6 +1,8 @@
 
 Add more rules button
+Add rule numbering
 Get specials working (or sounds as least)
+Get sound 1 working
 Option to cancel specials and triggers
 Clear / resize array when stage size changes
 Save / Restore Stage size

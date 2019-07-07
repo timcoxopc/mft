@@ -92,7 +92,6 @@ class Muffit extends React.Component {
   }
 
   handleUpdateSettings(prop, value){
-    console.log("update", prop, " with ", value);
     //const cells = this.state.mapCells.slice();
     this.setState({
       [prop]: Number(value)
@@ -209,7 +208,6 @@ class Muffit extends React.Component {
     let modalClose = () => this.setState({ modalShow: false });
     let settingsModalClose = () => this.setState({ settingsModalShow: false });
     let imgsrc = images(`./${this.state.spriteSheet}`);
-    console.log("43:", this.state.mapCells[43]);
 
     return (
         <div>
@@ -376,10 +374,13 @@ function convertRules(rules) {
       
       if(allRules){
         for(newRule of allRules) {
-          newRules[gc(rule[0]) + newRule] = {output: rule[7], special1: rule[8]};
+          newRules[gc(rule[0]) + newRule] = {output: rule[7]};
+          //if(, special1: rule[8])
+          if(rule[8] !== 1) {
+            newRules[gc(rule[0]) + newRule].special1 = rule[8]; 
+          }
         }
       }
-      //console.log(gc(rule[0]));
   }
   return newRules;
 }

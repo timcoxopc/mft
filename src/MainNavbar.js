@@ -4,6 +4,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import Form from 'react-bootstrap/Form'
 import FileSelector from './FileSelector';
 import CompileButton from './CompileButton';
 import { Link } from 'react-router-dom';
@@ -41,6 +42,18 @@ function MainNavbar(props) {
                   <Button className="nav-button" variant="success" as={Link} to="/play">Play</Button>
                 </ButtonGroup>
                 <CompileButton handlePlay={props.onPlay} programState={props.programState}></CompileButton>
+                <Form.Label className="map-select--label">Map</Form.Label>
+                <Form.Control className="map-select--control" as="select">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                  <option>6</option>
+                  <option>7</option>
+                  <option>8</option>
+                  <option>9</option>
+                </Form.Control>
               </Nav>
             </Navbar.Collapse>
           </Navbar>

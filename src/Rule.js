@@ -177,7 +177,7 @@ class Rule extends React.Component {
     }
 
     let specials = [];
-    for(let i = 2; i < 28; i++) {
+    for(let i = 1; i < 28; i++) {
       specials.push(this.renderSpecial(i, SPECIAL1, this.props.index));
     }
     const specialPopover = (

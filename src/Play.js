@@ -30,7 +30,9 @@ function Play(props) {
             let ruleIndex = gc(trigger) + gc(oldCells[i - props.cellsWide]) + gc(oldCells[i - 1]) + gc(oldCells[i]) + gc(oldCells[i + 1]) + gc(oldCells[i + props.cellsWide])
             if(props.rules[ruleIndex]) {
                 newCells[i] = props.rules[ruleIndex].output;
-                triggerSpecial(props.rules[ruleIndex].special1);
+                if(props.rules[ruleIndex].special1) {
+                    triggerSpecial(props.rules[ruleIndex].special1);
+                }
             }
         }
         cellsRef.current.cells = newCells.slice();
@@ -139,8 +141,22 @@ function gc(char) {
     }
 }
 
+var audio1 = new Audio('/sounds/bump.wav');
+var audio2 = new Audio('/sounds/collide1.wav');
+var audio3 = new Audio('/sounds/pickup.wav');
+var audio4 = new Audio('/sounds/destroy2.wav');
+var audio5 = new Audio('/sounds/explode.wav');
+var audio6 = new Audio('/sounds/hit.wav');
+var audio7 = new Audio('/sounds/sand.wav');
+var audio8 = new Audio('/sounds/teleport.wav');
+var audio9 = new Audio('/sounds/completelevel.wav');
+var audio = [audio1, audio2, audio3, audio4, audio5, audio6, audio7, audio8, audio9];
+
 function triggerSpecial(special) {
-    console.log("Trigger", special);
+    //console.log("Trigger Special", special);
+    if(special >= 1 && special <= 9) {
+        audio[special - 1].play();
+    }
 } 
 
 export default Play;
