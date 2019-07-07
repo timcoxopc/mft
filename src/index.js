@@ -10,6 +10,7 @@ import Play from './Play';
 //import FileSelector from './FileSelector';
 import { BrowserRouter as Router } from "react-router-dom";
 import { Route, Switch } from "react-router-dom";
+import cloneDeep from 'lodash/cloneDeep';
 import './index.css';
 
 const images = require.context('../public/img', true); // For hidden spritesheet
@@ -36,7 +37,8 @@ class Muffit extends React.Component {
     this.state = {
       rules: emptyRules,
       convertedRules: {},
-      mapCells: cells,
+      mapCells: [cells.slice(), cells.slice(), cells.slice(), cells.slice(), cells.slice(), cells.slice(), cells.slice(), cells.slice(), cells.slice()],
+      activeMap: 0,
       modalShow: false,
       settingsModalShow: false,
       spriteSheet: "chicken.png",
@@ -55,6 +57,7 @@ class Muffit extends React.Component {
   }
   
   handleClick(i, rule, value) {
+    console.log("!!!", this.state.mapCells);
     //console.log("*", i, rule, value);
     const rules = this.state.rules.slice();
     if(value === undefined && (i >= CELL1 && i <= OUTPUT)) {
@@ -76,23 +79,22 @@ class Muffit extends React.Component {
   }
 
   handleMapClick(cell) {
-    const cells = this.state.mapCells.slice();
-    cells[cell] = this.state.spriteIndex;
+    const cells = cloneDeep(this.state.mapCells);
+    cells[this.state.activeMap][cell] = this.state.spriteIndex;
     this.setState({
       mapCells: cells
     });
   }
 
   handleUpdate(cell, value){
-    const cells = this.state.mapCells.slice();
-    cells[cell] = value;
+    const cells = cloneDeep(this.state.mapCells);
+    cells[this.state.activeMap][cell] = value;
     this.setState({
       mapCells: cells
     });
   }
 
   handleUpdateSettings(prop, value){
-    //const cells = this.state.mapCells.slice();
     this.setState({
       [prop]: Number(value)
     });
@@ -112,7 +114,7 @@ class Muffit extends React.Component {
     var saveObj = {};
     //console.log(getImageData("sprite-sheet"));
     saveObj.rules = this.state.rules.slice();
-    saveObj.map = this.state.mapCells.slice();
+    saveObj.map = cloneDeep(this.state.mapCells);
     saveObj.spriteSheet = this.state.spriteSheet; //getImageData("sprite-sheet")
     downloadObjectAsJson(saveObj, "test");
   }
@@ -135,20 +137,12 @@ class Muffit extends React.Component {
       });
     }
     else if(this.state.programState === "playing") {
-      const cells = this.state.mapCells.slice();
+      const cells = cloneDeep(this.state.mapCells);
       this.setState({
         programState:"compiled",
         mapCells: cells,
         spriteHeight: 32
       });
-      /*
-      this.setState(function(currentState){
-        return {
-            mapCells:currentState.mapCells.slice(),
-            programState:"compiled"
-          }
-      });
-      */
     }
   }
 
@@ -191,16 +185,21 @@ class Muffit extends React.Component {
           }
 
           this.selectSpriteSheet(spriteSheet);
-
+          let cells = cloneDeep(this.state.mapCells);
+          cells[this.state.activeMap] = data.map.slice();
           this.setState ({
             rules: rules,
-            mapCells: data.map.slice()
+            mapCells: cells
             //spriteSheet: spriteSheet.slice()
           });
   }
 
   handleOpenSettings() {
     this.setState({ settingsModalShow: true });
+  }
+
+  handleChangeMap(e) {
+    this.setState({ activeMap: e.target.value });
   }
 
   render() {
@@ -217,6 +216,7 @@ class Muffit extends React.Component {
             onImportRules={() => this.importRules()}
             onFileLoaded={(e) => this.handleFileLoaded(e)}
             onOpenSettings={() => this.handleOpenSettings()}
+            onChangeMap={(e) => this.handleChangeMap(e)}
             onCompile={() => this.compile()}
             onPlay={() => this.handleCompileButton()}
             programState={this.state.programState}
@@ -246,7 +246,7 @@ class Muffit extends React.Component {
                 <Map
                   {...props}
                   rules={this.state.rules}
-                  cells={this.state.mapCells.slice()}
+                  cells={this.state.mapCells[this.state.activeMap].slice()}
                   cellsWide={this.state.cellswide}
                   cellsHigh={this.state.cellshigh}
                   cellWidth={this.state.cellwidth}
@@ -267,7 +267,7 @@ class Muffit extends React.Component {
                 <Play
                   {...props}
                   rules={this.state.convertedRules}
-                  cells={this.state.mapCells.slice()}
+                  cells={this.state.mapCells[this.state.activeMap].slice()}
                   cellsWide={this.state.cellswide}
                   cellsHigh={this.state.cellshigh}
                   cellWidth={this.state.cellwidth}

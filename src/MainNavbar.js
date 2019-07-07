@@ -43,16 +43,16 @@ function MainNavbar(props) {
                 </ButtonGroup>
                 <CompileButton handlePlay={props.onPlay} programState={props.programState}></CompileButton>
                 <Form.Label className="map-select--label">Map</Form.Label>
-                <Form.Control className="map-select--control" as="select">
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                  <option>6</option>
-                  <option>7</option>
-                  <option>8</option>
-                  <option>9</option>
+                <Form.Control  name="mapSelected" onChange={props.onChangeMap} className="map-select--control" as="select">
+                  <option value="0">1</option>
+                  <option value="1">2</option>
+                  <option value="2">3</option>
+                  <option value="3">4</option>
+                  <option value="4">5</option>
+                  <option value="5">6</option>
+                  <option value="6">7</option>
+                  <option value="7">8</option>
+                  <option value="8">9</option>
                 </Form.Control>
               </Nav>
             </Navbar.Collapse>
