@@ -1,7 +1,9 @@
 
+Multi maps and settings saving
+Other trigger working (instant, random, etc)
 Add more rules button
 Add rule numbering
-Get specials working (or sounds as least)
+Get other specials working
 Get sound 1 working
 Option to cancel specials and triggers
 Clear / resize array when stage size changes

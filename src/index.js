@@ -27,6 +27,10 @@ class Muffit extends React.Component {
 
   constructor(props) {
     super(props);
+
+    const DEFAULT_CELLS_WIDE = 25;
+    const DEFAULT_CELLS_HIGH = 15;
+
     let emptyRules = []
     for (let i = 0; i < 40; i++) {
       emptyRules.push([0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0]);
@@ -47,8 +51,8 @@ class Muffit extends React.Component {
       spritesPerRow: 8,
       spriteIndex: 1,  
       programState:"uncompiled",
-      cellswide: 25,
-      cellshigh: 15,
+      cellswide: DEFAULT_CELLS_WIDE,
+      cellshigh: DEFAULT_CELLS_HIGH,
       cellwidth: 32,
       cellheight: 32,
       timer1: 400,
@@ -116,6 +120,8 @@ class Muffit extends React.Component {
     saveObj.rules = this.state.rules.slice();
     saveObj.map = cloneDeep(this.state.mapCells);
     saveObj.spriteSheet = this.state.spriteSheet; //getImageData("sprite-sheet")
+    saveObj.cellswide = this.state.cellswide;
+    saveObj.cellshigh = this.state.cellshigh;
     downloadObjectAsJson(saveObj, "test");
   }
 
@@ -185,11 +191,38 @@ class Muffit extends React.Component {
           }
 
           this.selectSpriteSheet(spriteSheet);
-          let cells = cloneDeep(this.state.mapCells);
-          cells[this.state.activeMap] = data.map.slice();
+          
+          // Map
+          let cells;
+          if(data.map.length > 9){
+            // Kludge to load old maps, open, save in new format then remove this code
+            cells = cloneDeep(this.state.mapCells);
+            cells[this.state.activeMap] = data.map.slice();
+          }
+          else {
+            cells = cloneDeep(data.map);
+          }
+          // Remove once all files modernised?
+          let cellsWide, cellsHigh;
+          if(data.cellswide){
+            cellsWide = Number(data.cellswide);
+          } 
+          else {
+            cellsWide = 25;//DEFAULT_CELLS_WIDE;
+          }
+          if(data.cellshigh){
+            cellsHigh = Number(data.cellshigh);
+          } 
+          else {
+            cellsHigh = 15;//DEFAULT_CELLS_HIGH;
+          }
+          //
+          //saveObj.cellswide
           this.setState ({
             rules: rules,
-            mapCells: cells
+            mapCells: cells,
+            cellswide: cellsWide,
+            cellshigh: cellsHigh
             //spriteSheet: spriteSheet.slice()
           });
   }
