@@ -300,7 +300,8 @@ class Muffit extends React.Component {
                 <Play
                   {...props}
                   rules={this.state.convertedRules}
-                  cells={this.state.mapCells[this.state.activeMap].slice()}
+                  cells={cloneDeep(this.state.mapCells)}
+                  activeMap={this.state.activeMap}
                   cellsWide={this.state.cellswide}
                   cellsHigh={this.state.cellshigh}
                   cellWidth={this.state.cellwidth}

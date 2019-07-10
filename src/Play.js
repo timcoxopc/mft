@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Cell from './Cell';
 import KeyTrigger from './KeyTrigger';
+import cloneDeep from 'lodash/cloneDeep';
 
 function Play(props) {
-    const [cells, setCells] = useState(props.cells.slice());
-    let cellsRef = useRef(props.cells.slice);
+    const [cells, setCells] = useState(cloneDeep(props.cells));
+    const [activeMap, setActiveMap] = useState(props.activeMap);
+    let cellsRef = useRef(cloneDeep(props.cells));
 
     useInterval(() => {
         updateCells(12);
@@ -24,8 +26,8 @@ function Play(props) {
     //if(trigger < 10){
     //console.log("TRIGGER", props.cellsWide);
     //}
-    let oldCells = cellsRef.current.cells.slice();
-    let newCells = cellsRef.current.cells.slice();
+    let oldCells = cellsRef.current.cells[activeMap].slice();
+    let newCells = cellsRef.current.cells[activeMap].slice();
         for(let i = 0; i < oldCells.length; i++) {
             let ruleIndex = gc(trigger) + gc(oldCells[i - props.cellsWide]) + gc(oldCells[i - 1]) + gc(oldCells[i]) + gc(oldCells[i + 1]) + gc(oldCells[i + props.cellsWide])
             if(props.rules[ruleIndex]) {
@@ -35,8 +37,8 @@ function Play(props) {
                 }
             }
         }
-        cellsRef.current.cells = newCells.slice();
-        setCells(newCells);
+        cellsRef.current.cells[activeMap] = newCells.slice();
+        setCells(cloneDeep(cellsRef.current.cells));
     }
 
     function renderMapCell(i, x, y) {
@@ -55,7 +57,7 @@ function Play(props) {
         return(
             <Cell
                 key = {i}
-                value = {cells[i]}
+                value = {cells[activeMap][i]}
                 style = {spriteCellStyle} 
                 spriteSheet = {props.spriteSheet}
                 spriteWidth = {props.spriteWidth} 
@@ -79,6 +81,29 @@ function Play(props) {
         }    
     }
 
+    var audio1 = new Audio('/sounds/bump.wav');
+    var audio2 = new Audio('/sounds/collide1.wav');
+    var audio3 = new Audio('/sounds/pickup.wav');
+    var audio4 = new Audio('/sounds/destroy2.wav');
+    var audio5 = new Audio('/sounds/explode.wav');
+    var audio6 = new Audio('/sounds/hit.wav');
+    var audio7 = new Audio('/sounds/sand.wav');
+    var audio8 = new Audio('/sounds/teleport.wav');
+    var audio9 = new Audio('/sounds/completelevel.wav');
+    var audio = [audio1, audio2, audio3, audio4, audio5, audio6, audio7, audio8, audio9];
+    
+    function triggerSpecial(special) {
+        //console.log("Trigger Special", special);
+        if(special >= 1 && special <= 9) {
+            audio[special - 1].play();
+        }
+        else if(special === 16 && Number(activeMap) < 9) {
+            setActiveMap(Number(activeMap) + 1);
+        }
+        else if(special === 17 && Number(activeMap) > 0) {
+            setActiveMap(Number(activeMap) - 1);
+        }
+    } 
     function useInterval(callback, delay) {
         const savedCallback = useRef();
       
@@ -140,23 +165,5 @@ function gc(char) {
         return String.fromCharCode(97 + char);
     }
 }
-
-var audio1 = new Audio('/sounds/bump.wav');
-var audio2 = new Audio('/sounds/collide1.wav');
-var audio3 = new Audio('/sounds/pickup.wav');
-var audio4 = new Audio('/sounds/destroy2.wav');
-var audio5 = new Audio('/sounds/explode.wav');
-var audio6 = new Audio('/sounds/hit.wav');
-var audio7 = new Audio('/sounds/sand.wav');
-var audio8 = new Audio('/sounds/teleport.wav');
-var audio9 = new Audio('/sounds/completelevel.wav');
-var audio = [audio1, audio2, audio3, audio4, audio5, audio6, audio7, audio8, audio9];
-
-function triggerSpecial(special) {
-    //console.log("Trigger Special", special);
-    if(special >= 1 && special <= 9) {
-        audio[special - 1].play();
-    }
-} 
 
 export default Play;
