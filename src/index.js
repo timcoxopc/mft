@@ -32,7 +32,7 @@ class Muffit extends React.Component {
     const DEFAULT_CELLS_HIGH = 15;
 
     let emptyRules = []
-    for (let i = 0; i < 40; i++) {
+    for (let i = 0; i < 200; i++) {
       emptyRules.push([0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0]);
     }
 
@@ -61,7 +61,7 @@ class Muffit extends React.Component {
   }
   
   handleClick(i, rule, value) {
-    console.log("!!!", this.state.mapCells);
+    //console.log("!!!", this.state.mapCells);
     //console.log("*", i, rule, value);
     const rules = this.state.rules.slice();
     if(value === undefined && (i >= CELL1 && i <= OUTPUT)) {
@@ -159,7 +159,7 @@ class Muffit extends React.Component {
   }
 
   selectSpriteSheet(value) {
-    if(value !== "chicken.png") {
+    if(value !== "chicken.png" && value !== "cyber-chicken.png") {
       this.setState({
         spriteWidth: 16,
         spriteHeight: 16
@@ -313,6 +313,7 @@ class Muffit extends React.Component {
                   spritesPerRow={this.state.spritesPerRow}
                   programState={this.state.programState}
                   onUpdate={(cell, value) => this.handleUpdate(cell, value)}
+
                 />
               }
             />
@@ -396,18 +397,30 @@ function getWildCardRules(str) {
 function convertRules(rules) {
   const newRules = {};
   for(let rule of rules) {        
-      let newRule = "";
-      //let newRule = String(gc(rule[1]));
-      for(let i = 2; i <= 6; i++) {
-          newRule += gc(rule[i]); 
-      }
-      let allRules;
-      if(newRule !== "aaaaa") {
-          allRules = getWildCardRules(newRule).toString().split(",");
+      let newRule1 = gc(rule[2]) + gc(rule[3]) + gc(rule[4]) + gc(rule[5]) + gc(rule[6]);
+      let allRules = [];
+      if(newRule1 !== "aaaaa") {
+        if(rule[10] === 1){
+          // Handle arrows
+          let newRule2 = gc(rule[6]) + gc(rule[5]) + gc(rule[4]) + gc(rule[3]) + gc(rule[2]);
+          let newRule3 = gc(rule[3]) + gc(rule[6]) + gc(rule[4]) + gc(rule[2]) + gc(rule[5]);
+          let newRule4 = gc(rule[5]) + gc(rule[2]) + gc(rule[4]) + gc(rule[6]) + gc(rule[3]);
+          let allRulesString = getWildCardRules(newRule1).toString() +  
+                               getWildCardRules(newRule2).toString() + 
+                               getWildCardRules(newRule3).toString() + 
+                               getWildCardRules(newRule4).toString();
+          console.log("***");
+          allRules = allRulesString.split(",");
+          //let allRules =  + .split(",");
+        }
+        else {
+          allRules = getWildCardRules(newRule1).toString().split(",");
+        }
       } 
       
+      // Add rotational specials or move this code up
       if(allRules){
-        for(newRule of allRules) {
+        for(let newRule of allRules) {
           newRules[gc(rule[0]) + newRule] = {output: rule[7]};
           //if(, special1: rule[8])
           if(rule[8] !== 1) {
@@ -416,6 +429,7 @@ function convertRules(rules) {
         }
       }
   }
+  //console.log(newRules);
   return newRules;
 }
 

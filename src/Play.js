@@ -9,6 +9,7 @@ function Play(props) {
     let cellsRef = useRef(cloneDeep(props.cells));
 
     useInterval(() => {
+        updateCells(13); // random trigger test
         updateCells(12);
     }, 400);
 
@@ -24,18 +25,34 @@ function Play(props) {
         return;
     }
     //if(trigger < 10){
-    //console.log("TRIGGER", props.cellsWide);
+    //console.log("TRIGGER", trigger);
     //}
+    let arrayRandomCells = [];
+    let arrayRandomOutputs = [];
     let oldCells = cellsRef.current.cells[activeMap].slice();
     let newCells = cellsRef.current.cells[activeMap].slice();
         for(let i = 0; i < oldCells.length; i++) {
             let ruleIndex = gc(trigger) + gc(oldCells[i - props.cellsWide]) + gc(oldCells[i - 1]) + gc(oldCells[i]) + gc(oldCells[i + 1]) + gc(oldCells[i + props.cellsWide])
             if(props.rules[ruleIndex]) {
-                newCells[i] = props.rules[ruleIndex].output;
-                if(props.rules[ruleIndex].special1) {
-                    triggerSpecial(props.rules[ruleIndex].special1);
+                if(trigger === 13){
+                    // for random
+                    arrayRandomCells.push(i);
+                    arrayRandomOutputs.push(props.rules[ruleIndex].output);
+                }
+                else {
+                    newCells[i] = props.rules[ruleIndex].output;
+                    if(props.rules[ruleIndex].special1) {
+                        triggerSpecial(props.rules[ruleIndex].special1);
+                    }
                 }
             }
+        }
+        if(trigger === 13) {
+            let i = Math.floor(Math.random() * arrayRandomCells.length);
+            newCells[arrayRandomCells[i]] = arrayRandomOutputs[i];
+            //if(props.rules[ruleIndex].special1) {
+            //    triggerSpecial(props.rules[ruleIndex].special1);
+            //}
         }
         cellsRef.current.cells[activeMap] = newCells.slice();
         setCells(cloneDeep(cellsRef.current.cells));
@@ -160,7 +177,7 @@ function Play(props) {
 
 function gc(char) {
     if(char === undefined){
-        return "b";
+        return "q";
     } else{
         return String.fromCharCode(97 + char);
     }

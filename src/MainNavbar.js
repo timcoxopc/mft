@@ -31,7 +31,7 @@ function MainNavbar(props) {
                 <NavDropdown.Item eventKey="desert.png">Desert</NavDropdown.Item>
                 <NavDropdown.Item eventKey="caterpillar.png">Caterpillar</NavDropdown.Item>
                 <NavDropdown.Item eventKey="bomber.png">Bomber</NavDropdown.Item>
-                <NavDropdown.Item eventKey="snake.png">Snake</NavDropdown.Item>
+                <NavDropdown.Item eventKey="cyber-chicken.png">Cyber Chicken</NavDropdown.Item>
               </NavDropdown>
               <Nav.Link onClick={props.onOpenSettings}>Settings</Nav.Link>
               </Nav>
@@ -52,7 +52,7 @@ function MainNavbar(props) {
                   <option value="5">6</option>
                   <option value="6">7</option>
                   <option value="7">8</option>
-                  <option value="8">9</option>
+                  <option value="0">9</option>
                 </Form.Control>
               </Nav>
             </Navbar.Collapse>

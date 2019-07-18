@@ -3,7 +3,7 @@ import Rule from './Rule';
 import SpritePalette from './SpritePalette';
 
 function RuleSet(props) {
-    const totalRules = 40;
+    const totalRules = 200;
     let rules = [];
     for (let i = 0; i < totalRules; i++) {
         rules.push(
