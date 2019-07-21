@@ -29,6 +29,7 @@ import trigger22 from './img/triggers/trigger2.png';
 import trigger23 from './img/triggers/trigger3.png';
 import trigger24 from './img/triggers/trigger4.png';
 import trigger25 from './img/triggers/loop2.png';
+import RuleMenu from './RuleMenu.js';
 
 /*
 
@@ -45,10 +46,11 @@ Rule indexes
 8 - Special Output Main
 9 - Special Output Secondary - Reserved for future use (eg sound)
 10 - Arrow
+11 - Remove rule
 
 */
 const TRIGGER1 = 0;
-//const TRIGGER2 = 1;
+const TRIGGER2 = 1;
 const CELL1 = 2;
 const CELL2 = 3;
 const CELL3 = 4;
@@ -58,6 +60,7 @@ const OUTPUT = 7;
 const SPECIAL1 = 8;
 //const SPECIAL2 = 9;
 const ARROW = 10;
+//const REMOVE_RULE = 11;
 
 class Rule extends React.Component {
   constructor(props) {
@@ -147,26 +150,33 @@ class Rule extends React.Component {
           <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 2)} style={imgStyle} src={trigger2} /></button>
           <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 3)} style={imgStyle} src={trigger3} /></button>
           <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 4)} style={imgStyle} src={trigger4} /></button>
-          <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 5)} style={imgStyle} src={trigger5} /></button>
+          <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 12)} style={imgStyle} src={trigger12} /></button>
+          <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 13)} style={imgStyle} src={trigger13} /></button>      
           <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 6)} style={imgStyle} src={trigger6} /></button>
           <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 7)} style={imgStyle} src={trigger7} /></button>
-          <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 8)} style={imgStyle} src={trigger8} /></button>
-          <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 9)} style={imgStyle} src={trigger9} /></button>
+
+          <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 20)} style={imgStyle} src={trigger21} /></button>
+          <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 21)} style={imgStyle} src={trigger22} /></button>
+          <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 22)} style={imgStyle} src={trigger23} /></button>
+          <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 23)} style={imgStyle} src={trigger24} /></button>
           <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 10)} style={imgStyle} src={trigger10} /></button>
-          <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 12)} style={imgStyle} src={trigger12} /></button>
-          <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 13)} style={imgStyle} src={trigger13} /></button>
-          <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 14)} style={imgStyle} src={trigger14} /></button>
           <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 15)} style={imgStyle} src={trigger15} /></button>
-          <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 16)} style={imgStyle} src={trigger16} /></button>
-          <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 17)} style={imgStyle} src={trigger17} /></button>
-          <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 18)} style={imgStyle} src={trigger18} /></button>
-          <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 19)} style={imgStyle} src={trigger19} /></button>
-          <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 20)} style={imgStyle} src={trigger20} /></button>
-          <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 22)} style={imgStyle} src={trigger21} /></button>
-          <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 22)} style={imgStyle} src={trigger22} /></button>
-          <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 23)} style={imgStyle} src={trigger23} /></button>
-          <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 24)} style={imgStyle} src={trigger24} /></button>
+          <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 20)} style={imgStyle} src={trigger20} /></button>          
           <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 25)} style={imgStyle} src={trigger25} /></button>
+          <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 14)} style={imgStyle} src={trigger14} /></button>
+        </div>
+      </Popover>
+    );
+    //<button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER1, this.props.index, 5)} style={imgStyle} src={trigger5} /></button>
+    const conditionalPopover = (
+      <Popover style={popoverStyle} id="trigger-popover" title="Condition">
+        <div >
+          <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER2, this.props.index, 8)} style={imgStyle} src={trigger8} /></button>
+          <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER2, this.props.index, 9)} style={imgStyle} src={trigger9} /></button>
+          <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER2, this.props.index, 16)} style={imgStyle} src={trigger16} /></button>
+          <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER2, this.props.index, 17)} style={imgStyle} src={trigger17} /></button>
+          <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER2, this.props.index, 18)} style={imgStyle} src={trigger18} /></button>
+          <button style={iconStyle}><img alt="trigger" onClick={() => this.props.onClick(TRIGGER2, this.props.index, 19)} style={imgStyle} src={trigger19} /></button>
         </div>
       </Popover>
     );
@@ -191,17 +201,27 @@ class Rule extends React.Component {
       transformOrigin: "top left",
       position: "absolute",
       left: "120px",
-      top: "78px"
+      top: "98px"
     }
 
     return (
       <div className="rule">          
-            
+          <RuleMenu
+            //onClick={ () => this.props.onClick(REMOVE_RULE, this.props.index)}
+          />
           <OverlayTrigger trigger="click" overlay={triggerPopover} placement="right" rootClose>
             <Trigger
               cellIndex={TRIGGER1}
               value={this.state.rule[TRIGGER1]}
-              className={"cell-trigger"}
+              className={"cell-trigger1"}
+              ref={this.attachRef}
+            />
+          </OverlayTrigger>
+          <OverlayTrigger trigger="click" overlay={conditionalPopover} placement="right" rootClose>
+            <Trigger
+              cellIndex={TRIGGER2}
+              value={this.state.rule[TRIGGER2]}
+              className={"cell-trigger2"}
               ref={this.attachRef}
             />
           </OverlayTrigger>

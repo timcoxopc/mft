@@ -11,7 +11,7 @@ function Play(props) {
     useInterval(() => {
         updateCells(13); // random trigger test
         updateCells(12);
-    }, 400);
+    }, 300);
 
     useEffect(
         () => { 
@@ -24,22 +24,30 @@ function Play(props) {
     if(props.programState !== "playing") {
         return;
     }
-    //if(trigger < 10){
-    //console.log("TRIGGER", trigger);
-    //}
     let arrayRandomCells = [];
     let arrayRandomOutputs = [];
     let oldCells = cellsRef.current.cells[activeMap].slice();
     let newCells = cellsRef.current.cells[activeMap].slice();
+    let ruleIndex;
+    let conditionMet;
+    let r = Math.ceil(Math.random() * 4);
         for(let i = 0; i < oldCells.length; i++) {
-            let ruleIndex = gc(trigger) + gc(oldCells[i - props.cellsWide]) + gc(oldCells[i - 1]) + gc(oldCells[i]) + gc(oldCells[i + 1]) + gc(oldCells[i + props.cellsWide])
-            if(props.rules[ruleIndex]) {
+            ruleIndex = gc(trigger) + gc(oldCells[i - props.cellsWide]) + gc(oldCells[i - 1]) + gc(oldCells[i]) + gc(oldCells[i + 1]) + gc(oldCells[i + props.cellsWide])
+            //if(props.rules[ruleIndex] && props.rules[ruleIndex].condition !== 0){
+            //    conditionMet = checkRandom(props.rules[ruleIndex].condition, r);
+            //} else {
+                conditionMet = true;
+            //}
+            if(props.rules[ruleIndex] && conditionMet) {                
                 if(trigger === 13){
                     // for random
                     arrayRandomCells.push(i);
                     arrayRandomOutputs.push(props.rules[ruleIndex].output);
                 }
                 else {
+                    //if(trigger < 5){
+                    //    console.log("r", ruleIndex);
+                    //}
                     newCells[i] = props.rules[ruleIndex].output;
                     if(props.rules[ruleIndex].special1) {
                         triggerSpecial(props.rules[ruleIndex].special1);
@@ -114,6 +122,18 @@ function Play(props) {
         if(special >= 1 && special <= 9) {
             audio[special - 1].play();
         }
+        else if(special === 10) {
+            setTimeout(function(){ updateCells(20);}, 50); // Change to lower for prod build
+        }
+        else if(special === 11) {
+            setTimeout(function(){ updateCells(21);}, 50); // Change to lower for prod build
+        }
+        else if(special === 12) {
+            setTimeout(function(){ updateCells(22);}, 50); // Change to lower for prod build
+        }
+        else if(special === 13) {
+            setTimeout(function(){ updateCells(23);}, 50); // Change to lower for prod build
+        }
         else if(special === 16 && Number(activeMap) < 9) {
             setActiveMap(Number(activeMap) + 1);
         }
@@ -177,9 +197,26 @@ function Play(props) {
 
 function gc(char) {
     if(char === undefined){
-        return "q";
+        return "p";
     } else{
         return String.fromCharCode(97 + char);
+    }
+}
+
+function checkRandom(c, r /*= Math.ceil(Math.random() * 4)*/){
+    c = c - 13;
+    console.log("C", c + ":::" + r);
+    //let r 
+    if((c === 1 || c === 3) && r === 1){
+        return true;
+    } else if((c === 1 || c === 4) && r === 2){
+        return true;
+    } else if((c === 2 || c === 5) && r === 3){
+        return true;    
+    } else if((c === 2 || c === 6) && r === 4){
+        return true;    
+    } else {
+        return false;
     }
 }
 

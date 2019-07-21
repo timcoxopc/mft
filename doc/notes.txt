@@ -1,4 +1,8 @@
 
+http://glslsandbox.com/e#207.3 - webgl game of life
+https://github.com/MalphasWats/glixl
+
+
 Multi maps and settings saving
 Other trigger working (instant, random, etc)
 Add more rules button

@@ -16,7 +16,7 @@ import './index.css';
 const images = require.context('../public/img', true); // For hidden spritesheet
 
 const TRIGGER1 = 0;
-//const TRIGGER2 = 1;
+const TRIGGER2 = 1;
 const CELL1 = 2;
 const OUTPUT = 7;
 const SPECIAL1 = 8;
@@ -62,11 +62,11 @@ class Muffit extends React.Component {
   
   handleClick(i, rule, value) {
     //console.log("!!!", this.state.mapCells);
-    //console.log("*", i, rule, value);
+    console.log("*", i, rule, value);
     const rules = this.state.rules.slice();
     if(value === undefined && (i >= CELL1 && i <= OUTPUT)) {
       rules[rule - 1][i] = this.state.spriteIndex;
-    } else if (i === TRIGGER1 || i === SPECIAL1) {
+    } else if (i === TRIGGER1 || i === TRIGGER2 || i === SPECIAL1) {
       document.body.click(); // Trigger popover to hide
       rules[rule - 1][i] = value;
     } else if (i === ARROW) {
@@ -409,7 +409,6 @@ function convertRules(rules) {
                                getWildCardRules(newRule2).toString() + 
                                getWildCardRules(newRule3).toString() + 
                                getWildCardRules(newRule4).toString();
-          console.log("***");
           allRules = allRulesString.split(",");
           //let allRules =  + .split(",");
         }
@@ -418,18 +417,15 @@ function convertRules(rules) {
         }
       } 
       
-      // Add rotational specials or move this code up
       if(allRules){
         for(let newRule of allRules) {
-          newRules[gc(rule[0]) + newRule] = {output: rule[7]};
-          //if(, special1: rule[8])
+          newRules[gc(rule[0]) /*+ gc(rule[1])*/ + newRule] = {output: rule[7]};
           if(rule[8] !== 1) {
-            newRules[gc(rule[0]) + newRule].special1 = rule[8]; 
+            newRules[gc(rule[0]) /*+ gc(rule[1])*/ + newRule].special1 = rule[8]; 
           }
         }
       }
   }
-  //console.log(newRules);
   return newRules;
 }
 
