@@ -419,9 +419,9 @@ function convertRules(rules) {
       
       if(allRules){
         for(let newRule of allRules) {
-          newRules[gc(rule[0]) /*+ gc(rule[1])*/ + newRule] = {output: rule[7]};
+          newRules[gc(rule[0]) + gc(rule[1]) + newRule] = {output: rule[7]};
           if(rule[8] !== 1) {
-            newRules[gc(rule[0]) /*+ gc(rule[1])*/ + newRule].special1 = rule[8]; 
+            newRules[gc(rule[0]) + gc(rule[1]) + newRule].special1 = rule[8]; 
           }
         }
       }

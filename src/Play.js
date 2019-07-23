@@ -9,8 +9,27 @@ function Play(props) {
     let cellsRef = useRef(cloneDeep(props.cells));
 
     useInterval(() => {
-        updateCells(13); // random trigger test
-        updateCells(12);
+        updateCells(13, 0); // random trigger test
+        updateCells(12, 0);
+        let r = Math.ceil(Math.random() * 4);
+        
+        // Modify so only run triggers that are used 
+        
+        // Random
+        if(checkRandom(1, r)) updateCells(12, 1);
+        else if(checkRandom(2, r)) updateCells(12, 2);
+        if(checkRandom(3, r)) updateCells(12, 3);
+        else if(checkRandom(4, r)) updateCells(12, 4);
+        else if(checkRandom(5, r)) updateCells(12, 5);
+        else if(checkRandom(6, r)) updateCells(12, 6);
+
+        // Individual Random
+        updateCells(12, 7);
+        updateCells(12, 8);
+        updateCells(12, 9);
+        updateCells(12, 10);
+        updateCells(12, 11);
+        updateCells(12, 12);
     }, 300);
 
     useEffect(
@@ -20,7 +39,7 @@ function Play(props) {
         [cells]
       );
 
-   function updateCells(trigger) {
+   function updateCells(trigger1, trigger2 = 0) {
     if(props.programState !== "playing") {
         return;
     }
@@ -29,23 +48,27 @@ function Play(props) {
     let oldCells = cellsRef.current.cells[activeMap].slice();
     let newCells = cellsRef.current.cells[activeMap].slice();
     let ruleIndex;
-    let conditionMet;
-    let r = Math.ceil(Math.random() * 4);
+    let isMet;
         for(let i = 0; i < oldCells.length; i++) {
-            ruleIndex = gc(trigger) + gc(oldCells[i - props.cellsWide]) + gc(oldCells[i - 1]) + gc(oldCells[i]) + gc(oldCells[i + 1]) + gc(oldCells[i + props.cellsWide])
-            //if(props.rules[ruleIndex] && props.rules[ruleIndex].condition !== 0){
-            //    conditionMet = checkRandom(props.rules[ruleIndex].condition, r);
-            //} else {
-                conditionMet = true;
-            //}
-            if(props.rules[ruleIndex] && conditionMet) {                
-                if(trigger === 13){
+            if(trigger2 >= 7 && trigger2 <= 12) {
+                if(checkRandom(trigger2 - 6, Math.ceil(Math.random() * 4))){
+                    isMet = true
+                } else {
+                    isMet = false;
+                }
+            } else {
+                isMet = true;
+            }
+
+            ruleIndex = gc(trigger1) + gc(trigger2) + gc(oldCells[i - props.cellsWide]) + gc(oldCells[i - 1]) + gc(oldCells[i]) + gc(oldCells[i + 1]) + gc(oldCells[i + props.cellsWide])
+            if(props.rules[ruleIndex] && isMet) {                
+                if(trigger1 === 13){
                     // for random
                     arrayRandomCells.push(i);
                     arrayRandomOutputs.push(props.rules[ruleIndex].output);
                 }
                 else {
-                    //if(trigger < 5){
+                    //if(trigger1 < 5){
                     //    console.log("r", ruleIndex);
                     //}
                     newCells[i] = props.rules[ruleIndex].output;
@@ -55,7 +78,7 @@ function Play(props) {
                 }
             }
         }
-        if(trigger === 13) {
+        if(trigger1 === 13 && isMet) {
             let i = Math.floor(Math.random() * arrayRandomCells.length);
             newCells[arrayRandomCells[i]] = arrayRandomOutputs[i];
             //if(props.rules[ruleIndex].special1) {
@@ -123,16 +146,16 @@ function Play(props) {
             audio[special - 1].play();
         }
         else if(special === 10) {
-            setTimeout(function(){ updateCells(20);}, 50); // Change to lower for prod build
+            setTimeout(function(){ updateCells(20, 0);}, 50); // Change to lower for prod build
         }
         else if(special === 11) {
-            setTimeout(function(){ updateCells(21);}, 50); // Change to lower for prod build
+            setTimeout(function(){ updateCells(21, 0);}, 50); // Change to lower for prod build
         }
         else if(special === 12) {
-            setTimeout(function(){ updateCells(22);}, 50); // Change to lower for prod build
+            setTimeout(function(){ updateCells(22, 0);}, 50); // Change to lower for prod build
         }
         else if(special === 13) {
-            setTimeout(function(){ updateCells(23);}, 50); // Change to lower for prod build
+            setTimeout(function(){ updateCells(23, 0);}, 50); // Change to lower for prod build
         }
         else if(special === 16 && Number(activeMap) < 9) {
             setActiveMap(Number(activeMap) + 1);
@@ -170,12 +193,12 @@ function Play(props) {
                 {cellsGrid}
             </div>
             <div className="keys-wrapper">
-                <KeyTrigger style={{margin: "10px"}} keyCode={37} label="Left" onTrigger={() => updateCells(1)} />
-                <KeyTrigger style={{margin: "10px"}} keyCode={38} label="Up" onTrigger={() => updateCells(2)} />
-                <KeyTrigger style={{margin: "10px"}} keyCode={39} label="Right" onTrigger={() => updateCells(3)} />
-                <KeyTrigger style={{margin: "10px"}} keyCode={40} label="Down" onTrigger={() => updateCells(4)} />
-                <KeyTrigger style={{margin: "10px"}} keyCode={90} label="z" onTrigger={() => updateCells(6)} />
-                <KeyTrigger style={{margin: "10px"}} keyCode={88} label="x" onTrigger={() => updateCells(7)} />
+                <KeyTrigger style={{margin: "10px"}} keyCode={37} label="Left" onTrigger={() => updateCells(1, 0)} />
+                <KeyTrigger style={{margin: "10px"}} keyCode={38} label="Up" onTrigger={() => updateCells(2, 0)} />
+                <KeyTrigger style={{margin: "10px"}} keyCode={39} label="Right" onTrigger={() => updateCells(3, 0)} />
+                <KeyTrigger style={{margin: "10px"}} keyCode={40} label="Down" onTrigger={() => updateCells(4, 0)} />
+                <KeyTrigger style={{margin: "10px"}} keyCode={90} label="z" onTrigger={() => updateCells(6, 0)} />
+                <KeyTrigger style={{margin: "10px"}} keyCode={88} label="x" onTrigger={() => updateCells(7, 0)} />
             </div>
         </div>
     );
@@ -203,10 +226,8 @@ function gc(char) {
     }
 }
 
-function checkRandom(c, r /*= Math.ceil(Math.random() * 4)*/){
-    c = c - 13;
-    console.log("C", c + ":::" + r);
-    //let r 
+function checkRandom(c, r){
+    //c = c - 13;
     if((c === 1 || c === 3) && r === 1){
         return true;
     } else if((c === 1 || c === 4) && r === 2){
