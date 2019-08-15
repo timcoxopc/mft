@@ -26,6 +26,7 @@ function PlayEaselJS(props) {
             </div>
         </div>
     );
+}
 
 function gc(char) {
     if(char === undefined){
@@ -164,6 +165,7 @@ function updateCells(trigger1, trigger2 = 0) {
 
     let arrayRandomCells = [];
     let arrayRandomOutputs = [];
+    console.log("activeMap", activeMap);
     let oldCells = activeCells[activeMap].slice();
     let newCells = activeCells[activeMap].slice();
     
