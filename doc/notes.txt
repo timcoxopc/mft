@@ -1,18 +1,26 @@
 
-http://glslsandbox.com/e#207.3 - webgl game of life
-https://github.com/MalphasWats/glixl
+# Notes
 
+## EaselJS
 
-Multi maps and settings saving
-Other trigger working (instant, random, etc)
-Add more rules button
-Add rule numbering
-Get other specials working
-Get sound 1 working
-Option to cancel specials and triggers
-Clear / resize array when stage size changes
-Save / Restore Stage size
-Arrow working
+https://stackoverflow.com/questions/20850634/easeljs-not-showing-bitmap
+https://zimjs.com - Has isometric board module
+
+## Misc
+
+- http://glslsandbox.com/e#207.3 - webgl game of life
+- https://github.com/MalphasWats/glixl
+
+- Multi maps and settings saving
+- Other trigger working (instant, random, etc)
+- Add more rules button
+- Add rule numbering
+- Get other specials working
+- Get sound 1 working
+- Option to cancel specials and triggers
+- Clear / resize array when stage size changes
+- Save / Restore Stage size
+- Arrow working
 
 ---------------------------------------------------------------------------------
 Add Bootstrap form elements to Export window

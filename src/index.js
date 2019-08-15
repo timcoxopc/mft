@@ -6,7 +6,8 @@ import ImportModal from './ImportModal';
 import SettingsModal from './SettingsModal';
 import RuleSet from './RuleSet';
 import Map from './Map';
-import Play from './Play';
+//import Play from './Play';
+import PlayEaselJS from './PlayEaselJS';
 //import FileSelector from './FileSelector';
 import { BrowserRouter as Router } from "react-router-dom";
 import { Route, Switch } from "react-router-dom";
@@ -218,6 +219,7 @@ class Muffit extends React.Component {
           }
           //
           //saveObj.cellswide
+          
           this.setState ({
             rules: rules,
             mapCells: cells,
@@ -297,7 +299,7 @@ class Muffit extends React.Component {
             <Route 
               path="/play" exact 
               render={props => 
-                <Play
+                <PlayEaselJS
                   {...props}
                   rules={this.state.convertedRules}
                   cells={cloneDeep(this.state.mapCells)}

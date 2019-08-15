@@ -1,7 +1,11 @@
 
-Phase 1 - Able to load and play catterpillar. Able to edit rules (not sprites) and export txt file.
+# Muffit Roadmap
 
+## Phase 1 
+
+Able to load and play catterpillar. Able to edit rules (not sprites) and export txt file.
 Either with orignal compiling method or multi-rule method (i.e with seperate sets of rules for each combination of cells).
+
 - Import and export files on desktop
 - Highlight Sprite / Trigger / Special
 - Smooth UI (and add remove rules)
@@ -10,18 +14,23 @@ Either with orignal compiling method or multi-rule method (i.e with seperate set
 - Map editor 
 - Player
 
-Phase 2 - Able to create Ludum dare game on an iPad.
+## Phase 2 
 
-Basic Sprite editor
-Save on iPad (Local storage)
-Import sounds
-Load other maps
-Export and Import from iPad (Dropbox or website)
-UI Refinements
-Quick Compile
-Standalone player.
+Able to create Ludum dare game on an iPad.
 
-Phase 3 - Ready for others to use for Ludum dare
+- Basic Sprite editor
+- Save on iPad (Local storage)
+- Import sounds
+- Load other maps
+- Export and Import from iPad (Dropbox or website)
+- UI Refinements
+- Quick Compile
+- Standalone player.
+
+## Phase 3
+
+Ready for others to use for Ludum dare
+
 - More UI Refinements
 - Account logon
 - Multi tab rules organisation 
@@ -31,20 +40,26 @@ Phase 3 - Ready for others to use for Ludum dare
 - Basic Website with Save to website functionality + iFrame embeddable
 ? Record Sounds
 
-Phase 4
+## Phase 4
+
 - 100 users signed up
 - Refine UX and Website
 - More triggers and specials
 
-Phase 5
+## Phase 5
+
 - Marketing (Game Jams - Muffit Jam on Itch.io, Ludum Dare, AlakaJam, ProcGen Jam, Education/Kids, Systems modelling, Art, CA Community)
+
+
+## Phase 6
 
 ? Layers and Levels
 ? Generative Sprites 
 ??? Isometric
 
 MULTI RULE METHOD
-10 x 2 cells
-8? x 3 cells
-5 x 4 cells
-1 x 5 cells
+
+- 10 x 2 cells
+- 8? x 3 cells
+- 5 x 4 cells
+- 1 x 5 cells
